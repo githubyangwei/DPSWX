@@ -1,0 +1,223 @@
+<template>
+  <view>
+    <view class="sticky-in-relative-container">
+      <ui-sticky  scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap>
+        <view  class="listSearch {{searchCont}}">
+          <icon type="search" size="18" bindtap="searchACT"></icon>
+          <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名、家谱名" value="{{searchStr}}">
+        </view>
+        <view slot="sticky"  class="listSearch {{searchCont}}">
+          <icon type="search" size="18" bindtap="searchACT"></icon>
+          <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名、家谱名" value="{{searchStr}}">
+        </view>
+      </ui-sticky>
+    </view>
+    
+    <view class="listConts">
+        <view wx:for="{{listData}}"  wx:key="item">
+         <view class="booklist" bindtap="openBook" id='{{item.BOOK_ID}}'>
+            <view class="imageblock">
+              <image src="{{item.BOOK_COVER}}"  hover-class="hoverTurn" />
+            </view>
+            <view class="bookDetail">
+                <view class="bookTitle">{{item.BOOK_NAME}}</view>
+                <view class="bookMore">堂号：{{item.BOOK_RELEASE_OR}}</view>
+                <view class="bookMore">编者：{{item.BOOKAUTHOR}}</view>
+                <view class="bookMore">编纂：{{item.BOOKTIME}}</view>
+            </view>
+        </view>
+         
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+var  page = 1;
+var bookData=[{
+	"BOOK_NAME": "新建谱书",
+	"BOOK_RELEASE_OR": "1",
+	"BOOKTIME": "公元二零一七年九月二十三日",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会1",
+	"BOOK_ID": "40288b57645a494201645a623d720002"
+}, {
+	"BOOK_NAME": "义门陈氏族谱",
+	"BOOK_RELEASE_OR": "1",
+	"BOOKTIME": "2018-07-02 17:45:45",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会2",
+	"BOOK_ID": "40288bec643a858d01643aae934e0009"
+}, {
+	"BOOK_NAME": "测试Copy.",
+	"BOOK_RELEASE_OR": "1",
+	"BOOKTIME": "2018-07-02 17:45:45",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会3",
+	"BOOK_ID": "40288bcd644a1a6901644a64decb0031"
+}, {
+	"BOOK_NAME": "测试1",
+	"BOOK_RELEASE_OR": "0",
+	"BOOKTIME": "2018-07-02 17:45:45",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会4",
+	"BOOK_ID": "40288bd8643f55020164400f98560010"
+}, {
+	"BOOK_NAME": "测试2",
+	"BOOK_RELEASE_OR": "0",
+	"BOOKTIME": "2018-07-02 17:45:45",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会5",
+	"BOOK_ID": "40288bd8643f55020164400f98560010"
+}, {
+	"BOOK_NAME": "测试3",
+	"BOOK_RELEASE_OR": "0",
+	"BOOKTIME": "2018-07-02 17:45:45",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会6",
+	"BOOK_ID": "40288bd8643f55020164400f98560010"
+}, {
+	"BOOK_NAME": "测试4",
+	"BOOK_RELEASE_OR": "0",
+	"BOOKTIME": "2018-07-02 17:45:45",
+	"BOOK_COVER": "../../static/image/bookFM.png",
+	"BOOKAUTHOR": "武汉市洪山区编委会7",
+	"BOOK_ID": "40288bd8643f55020164400f98560010"
+}];
+
+
+export default {
+  config: {
+    navigationBarTitleText: "家谱",
+    enablePullDownRefresh: true
+  },
+  data: {
+    searchStr:"",
+    searchCont:"",
+    listData:bookData,
+    NAV_HEIGHT:0,
+    scrollTop: 0,
+
+  },
+onPageScroll (e) {
+
+    this.setData({
+      scrollTop: e.scrollTop
+    })
+  },
+
+  //搜索值获取/赋值
+  searchTxtIn:function(e){
+    this.setData({
+      searchStr: e.detail.value
+    })
+  },
+  //搜索事件
+  searchACT:function(){
+    console.log(this.data);
+  },
+// ----------------------搜索结束
+  //打开谱书
+  openBook:function(e){
+      wx.navigateTo({
+        url:'/pages/book/bookDetail'
+      })
+  },
+
+  onLoad: function(options) {
+    if(options.type=="search"){
+      this.setData({
+        searchCont:'listSearchShow'
+      })
+    }
+
+  },
+  // 下拉刷新
+  onPullDownRefresh: function() {
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+    var that = this;
+    page = 1;
+    that.setData({
+      listData: []
+    });
+    // wx.request({
+    //   url: 'https://xxx/?page=0',
+    //   method: "GET",
+    //   header: {
+    //     'content-type': 'application/text'
+    //   },
+    //   success: function (res) {
+    //     that.setData({
+    //       moment: res.data.data
+    //     });
+    //     // 设置数组元素
+    //     that.setData({
+    //       moment: that.data.moment
+    //     });
+    //     console.log(that.data.moment);
+    //     // 隐藏导航栏加载框
+    //     wx.hideNavigationBarLoading();
+    //     // 停止下拉动作
+    //     wx.stopPullDownRefresh();
+    //   }
+    // })
+
+    setTimeout(function() {
+      // 隐藏导航栏加载框
+      wx.hideNavigationBarLoading();
+      // 停止下拉动作
+      wx.stopPullDownRefresh();
+
+    }, 1000);
+  },
+  //上拉加载
+  onReachBottom: function() {
+    var that = this;
+    // 显示加载图标
+    wx.showLoading({
+      title: "玩命加载中"
+    });
+    // 页数+1
+    page = page + 1;
+    for(var i=0;i<bookData.length;i++){
+      that.data.listData.push(bookData[i]);
+    }
+    that.setData({
+      listData: that.data.listData
+    });
+    // wx.request({
+    //   url: "https://xxx/?page=" + page,
+    //   method: "GET",
+    //   // 请求头部
+    //   header: {
+    //     "content-type": "application/text"
+    //   },
+    //   success: function(res) {
+    //     // 回调函数
+    //     var moment_list = that.data.moment;
+
+    //     for (var i = 0; i < res.data.data.length; i++) {
+    //       moment_list.push(res.data.data[i]);
+    //     }
+    //     // 设置数据
+    //     that.setData({
+    //       moment: that.data.moment
+    //     });
+    //     // 隐藏加载框
+    //     wx.hideLoading();
+    //   }
+    // });
+
+    setTimeout(function() {
+      // 隐藏加载框
+      wx.hideLoading();
+
+    }, 1000);
+  }
+};
+</script>
+
+<style lang="less">
+@import url(../../static/styles/bookList.less);
+</style>

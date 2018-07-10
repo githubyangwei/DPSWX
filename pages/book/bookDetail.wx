@@ -1,0 +1,320 @@
+<template>
+  <view class="bookDetailConts">
+    <view class="bookshow">
+      <view class="bookFont">
+        <image src="../../static/image/bookFM.png" />
+      </view>
+      <view class="bookTextCont">
+        <view class="bookTitles">
+          <text>【李】上李家湾房世系</text>
+          <view class="bookQrCode" bindtap="openQrCode">
+            <span color="#FFBE00" class="wxIcon wxIcon-ai-code" style="color: #ff7b52;font-size: 32rpx;"></span>
+          </view>
+        </view>
+        <view class="bookHock">堂号：义仁堂</view>
+        <view class="bookAuthur">编者：李巍</view>
+        <view class="bookData">编篡：2018-05-20</view>
+      </view>
+    </view>
+
+    <view class="userline">
+      <navigator url="bookList" class="navigator">
+        <view class="navigator-text">
+          <view class="userPhoto">
+            <image src="../../static/image/user.png" />
+          </view>
+          <view class="userPhoto">
+            <image src="../../static/image/user.png" />
+          </view>
+          <view class="userPhoto">
+            <image src="../../static/image/user.png" />
+          </view>
+          <view class="userPhoto">
+            <image src="../../static/image/user.png" />
+          </view>
+        </view>
+        <view class="navigator-arrow">
+          <text class="openMore">全部用户(1.2万)</text>
+        </view>
+      </navigator>
+    </view>
+
+    <view class="ui-row ui-row-border-top ui-row-border-bottom userAndBookAll">
+      <view class="ui-col ui-col-border-right ui-col-align-center align-center valign-middle">
+        <navigator url="bookList" class="ui-col-content align-center valign-middle">
+          <span color="#FFBE00" class="wxIcon wxIcon-shu" style="color: #ff7b52;font-size: 32rpx;"></span>
+          总谱
+          <text>（6）</text>
+        </navigator>
+      </view>
+      <view class="ui-col ui-col-align-center align-center valign-middle">
+        <navigator url="../bookAll/nodeList/allNode" class="ui-col-content align-center valign-middle">
+          <span color="#FFBE00" class="wxIcon wxIcon-Shapecopy" style="color: #ff7b52;font-size: 32rpx;"></span>
+          人物
+          <text>（5000）</text>
+        </navigator>
+      </view>
+    </view>
+
+    <view class="showMenusCont">
+      <view class="menuTitle menuAline">
+        <image src="../../static/image/bookMenu.png" /> 目录
+      </view>
+      <view class="MenuLv1 menuAline">第一篇 世系篇</view>
+      <view class="MenuLv2 menuAline">第一章 中华姓氏远祖太昊伏羲</view>
+      <view class="MenuLv3 menuAline ">第一节 太昊伏羲氏
+        <span color="#FFBE00" class="wxIcon wxIcon-suo menLocked" style="color: #808080;font-size: 40rpx"></span>
+      </view>
+      <view class="MenuLv3 menuAline">第一节 太昊伏羲氏</view>
+      <view class="MenuLv3 menuAline">第一节 太昊伏羲氏</view>
+      <view class="MenuLv3 menuAline">第一节 太昊伏羲氏</view>
+      <view class="MenuLv3 menuAline">第一节 太昊伏羲氏</view>
+      <view class="MenuLv3 menuAline">第一节 太昊伏羲氏</view>
+      <view class="MenuLv3 menuAline">第一节 太昊伏羲氏</view>
+    </view>
+
+    <ui-fixed-view bottom="0" left="0" right="0">
+      <view class="bookDetailBox">
+        <view class="ui-row" style="margin-bottom: 10rpx;">
+          <view class="ui-col bookBtns addCollect" hover-class="hoverTurn" bindtap="addCollect" style="padding-left: 10rpx;padding-right: 5rpx;">
+            <view class="ui-col-content">
+              <view class="column-content">加入收藏</view>
+            </view>
+          </view>
+          <view class="ui-col bookBtns readNow" hover-class="hoverTurn" bindtap="readNow" style="padding-left: 5rpx;padding-right: 10rpx;">
+            <view class="ui-col-content">
+              <view class="column-content">立即查阅</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </ui-fixed-view>
+  </view>
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: "家谱名字",
+      navigationBarBackgroundColor: "#e5dcca"
+    },
+    data: {},
+    openQrCode: function () {
+      wx.navigateTo({
+        url: "bookQrCode"
+      });
+    },
+    addCollect: function () {
+      wx.showToast({
+        title: "收藏成功",
+        icon: "success",
+        duration: 2000
+      });
+    },
+    readNow: function () {
+      wx.showToast({
+        title: "跳转目录",
+        icon: "loading",
+        duration: 2000
+      });
+    }
+  };
+</script>
+
+<style lang="less">
+@import url(../../static/styles/hover.less);
+.bookDetailConts {
+  background: #f5f5f5;
+  width: 100%;
+  min-height: 100%;
+}
+.bookshow {
+  height: 256rpx;
+  background: #e5dcca;
+  position: relative;
+  .bookFont {
+    position: absolute;
+    width: 161rpx;
+    height: 216rpx;
+    left: 38rpx;
+    top: 11rpx;
+  }
+  .bookTextCont {
+    padding-left: 224rpx;
+    padding-top: 11rpx;
+    color: #333333;
+    font-size: 26rpx;
+    line-height: 52rpx;
+    .bookTitles {
+      font-size: 30rpx;
+      line-height: 60rpx;
+      font-weight: bold;
+      position: relative;
+      .bookQrCode {
+        width: 32rpx;
+        height: 32rpx;
+        display: inline-block;
+        position: relative;
+        top: 2rpx;
+        left: 26rpx;
+        z-index: 12;
+      }
+    }
+  }
+}
+.userline {
+  height: 110rpx;
+  background: #fff;
+  position: relative;
+
+  .userPhoto {
+    width: 68rpx;
+    height: 68rpx;
+    border-radius: 35rpx;
+    overflow: hidden;
+    float: left;
+    margin-right: 16rpx;
+  }
+  .openMore {
+    position: relative;
+    right: 24rpx;
+    color: #666666;
+  }
+  .navigator {
+    padding: 20rpx 30rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .navigator:before {
+    content: " ";
+    position: absolute;
+    left: 30rpx;
+    top: 0;
+    right: 30rpx;
+    height: 1px;
+    border-top: 1rpx solid #d8d8d8;
+    color: #666666;
+  }
+  .navigator:first-child:before {
+    display: none;
+  }
+  .navigator-text {
+    flex: 1;
+  }
+  .navigator-arrow {
+    padding-right: 26rpx;
+    position: relative;
+  }
+  .navigator-arrow:after {
+    content: " ";
+    display: inline-block;
+    height: 18rpx;
+    width: 18rpx;
+    border-width: 2rpx 2rpx 0 0;
+    border-color: #888888;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: -8rpx;
+    right: 28rpx;
+  }
+}
+
+.userAndBookAll {
+  margin-top: 24rpx;
+  height: 102rpx;
+  background: #fff;
+  text-align: center;
+  overflow: hidden;
+  .ui-col-content {
+    height: 121rpx;
+    display: inline-block;
+    font-size: 34rpx;
+    .wxIcon {
+      height: 30rpx;
+      display: inline-block;
+      position: relative;
+      top: 2rpx;
+      padding-right: 15rpx;
+    }
+    text {
+      display: inline;
+      line-height: 130rpx;
+      font-size: 20rpx;
+      position: relative;
+      left: -10rpx;
+    }
+  }
+}
+.bookDetailBox {
+  height: 100rpx;
+  border-top: 1rpx solid #e5e5e5;
+  background: #fff;
+
+  .bookBtns {
+    text-align: center;
+    height: 72rpx;
+    margin: 7px 10px 0;
+    line-height: 72rpx;
+    font-size: 36rpx;
+    border-radius: 10rpx;
+  }
+  .addCollect {
+    color: #ff7b52;
+    background: #ffffff;
+    border: 1rpx solid #ff7b52;
+  }
+  .readNow {
+    color: #ffffff;
+    background: #ff7b52;
+  }
+}
+.showMenusCont {
+  background: #fff;
+  padding: 0 24rpx 101rpx;
+  .menuTitle {
+    font-size: 34rpx;
+    color: #333;
+    image {
+      width: 40rpx;
+      height: 30rpx;
+      display: inline-block;
+      margin-right: 2rpx;
+      position: relative;
+      top: 4rpx;
+    }
+  }
+  .menuAline {
+    border-bottom: 1rpx solid #d7c9c4;
+    height: 102rpx;
+    line-height: 102rpx;
+    position: relative;
+    .menLocked {
+      width: 27rpx;
+      height: 34rpx;
+      position: absolute;
+      top: 2rpx;
+      right: 12rpx;
+    }
+  }
+
+  .menuAline:last-child {
+    border: none;
+    margin-bottom: 10rpx;
+  }
+  .MenuLv1 {
+    font-size: 32rpx;
+    color: #333;
+  }
+  .MenuLv2,
+  .MenuLv3 {
+    color: #4c4c4c;
+    font-size: 28rpx;
+  }
+  .MenuLv3 {
+    padding-left: 30rpx;
+  }
+}
+</style>

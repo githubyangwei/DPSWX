@@ -1,0 +1,106 @@
+<template>
+  <view class="QrCodeCont">
+    <view class="QrCodeBks">
+      <view class="QrTitle">
+          <image src="../../static/image/books.png" style="width:24rpx;"/>谱书名
+      </view> 
+      <view class="QrImages">
+         
+      </view>
+      <view class="QrStr">
+         扫一扫，免费查看共享家谱
+      </view>
+      <view class="QrDownLoad" bindtap='QrDownLoad'>
+         保存谱书码
+         <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">ssssssssss</button>
+      </view>
+       <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+    </view> 
+  </view> 
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "家谱名字",
+    navigationBarBackgroundColor: "#ff7b52"
+  },
+  data: {},
+  onLoad: function() {
+     wx.getSetting({
+      success: function(res){
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function(res) {
+              console.log(res.userInfo)
+            }
+          })
+        }
+      }
+    })
+  },
+  QrDownLoad: function() {
+    wx.showToast({
+      title: "下载二维码",
+      icon: "success",
+      duration: 2000
+    });
+  },
+  bindGetUserInfo: function(e) {
+    console.log(e.detail.userInfo)
+  },
+  getPhoneNumber: function(e) { 
+        console.log(e.detail.errMsg) 
+        console.log(e.detail.iv) 
+        console.log(e.detail.encryptedData) 
+    } 
+};
+</script>
+
+<style lang="less">
+.QrCodeCont {
+  background: #ff7b52;
+  width: 100%;
+  height: 100%;
+  padding-top: 10rpx;
+  .QrCodeBks {
+    margin: 0 25rpx;
+    height: 985rpx;
+    background: #fff;
+    border-radius: 6rpx;
+    .QrTitle {
+      height: 100rpx;
+      line-height: 100rpx;
+      color: #ff7b52;
+      font-size: 24rpx;
+      padding-left: 50rpx;
+      image {
+        height: 30rpx;
+        display: inline-block;
+        position: relative;
+        top: 6rpx;
+        padding-right: 15rpx;
+      }
+    }
+    .QrImages{
+      width: 355rpx;
+      height: 355rpx;
+      margin: 175rpx auto 0;
+      background: #ccc;
+    }
+    .QrStr{
+      font-size: 28rpx;
+      color: #333333;
+      height: 70rpx;
+      line-height: 70rpx;
+      text-align: center;
+    }
+    .QrDownLoad{
+      color: #ff7b52;
+      font-size: 24rpx;
+      text-align: center;
+    }
+  }
+}
+</style>

@@ -1,0 +1,254 @@
+<template>
+  <view class="userConts">
+    <view class="sticky-in-relative-container">
+      <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap>
+
+        <view class="userTopCont">
+          <view class="topTables">
+            <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
+            <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
+          </view>
+          <view class="listSearch " bindtap="turnToSearch">
+            <icon type="search" size="18" bindtap="searchACT"></icon>
+            <input type="search"   disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
+          </view>
+        </view>
+
+        <view class="userTopCont" slot="sticky">
+          <view class="topTables">
+            <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
+            <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
+          </view>
+          <view class="listSearch " bindtap="turnToSearch">
+            <icon type="search" size="18" bindtap="searchACT"></icon>
+            <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
+          </view>
+        </view>
+
+      </ui-sticky>
+    </view>
+
+    <view class="showNodeCont">
+      <view class="showNodes  {{showType == 0 ?'active':''}}">
+
+        <view class="nodeCont">
+          <view class="ImgConts">
+            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>果石</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+              <view class="nodeParent">陈*柏-成*香</view>
+            </view>
+            <view class="line2">
+              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：45</text>
+              <text class="nodeSort">排行：2</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>15</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="nodeCont">
+          <view class="ImgConts">
+            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>果石2</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-portrait die"></span>
+              <view class="nodeParent">陈*柏-成*香</view>
+            </view>
+            <view class="line2">
+              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：45</text>
+              <text class="nodeSort">排行：2</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>115</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+
+      </view>
+      <view class="showNodes  {{showType == 1 ?'active':''}}">
+
+
+
+        <view class="nodeCont">
+          <view class="ImgConts">
+            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>果石3</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+              <view class="nodeParent">陈*柏-成*香</view>
+            </view>
+            <view class="line2">
+              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：45</text>
+              <text class="nodeSort">排行：2</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>15</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="nodeCont">
+          <view class="ImgConts">
+            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>果石4</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-portrait women"></span>
+              <view class="nodeParent">陈*柏-成*香</view>
+            </view>
+            <view class="line2">
+              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：45</text>
+              <text class="nodeSort">排行：2</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>115</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+
+
+      </view>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  var getData = ($obj, string) => {
+    return $obj.currentTarget.dataset[string];
+  }
+  export default {
+    config: {
+      navigationBarTitleText: ''
+    },
+    data: {
+      showType: 0,
+      NAV_HEIGHT: 0,
+      scrollTop: 0,
+      thisData: "",
+      allData: ""
+    },
+    onPageScroll(e) {
+
+      this.setData({
+        scrollTop: e.scrollTop
+      })
+    },
+    topClick: function (e) {
+      this.setData({
+        showType: getData(e, "index")
+      });
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 200
+      })
+    },
+    turnToSearch:function(){
+      wx.navigateTo({
+        url:'nodeSearch'
+      })
+    }
+  }
+</script>
+
+
+<style lang="less">
+@import url('node.less');
+
+.userConts {
+  width: 100%;
+  min-height: 100%;
+  background: #f5f5f5;
+  .userTopCont {
+    height: 200rpx;
+    .topTables {
+      height: 86rpx;
+      text-align: center;
+      background: #fff;
+      .topTxt {
+        width: 210rpx;
+        height: 86rpx;
+        display: inline-block;
+        color: #808080;
+        font-size: 30rpx;
+        position: relative;
+      }
+      .topTxt.active {
+        color: #333333;
+        font-weight: bold;
+      }
+      .topTxt.active:after {
+        content: " ";
+        display: block;
+        width: 52rpx;
+        height: 8rpx;
+        background: #ff7043;
+        border-radius: 4rpx;
+        position: absolute;
+        bottom: 0;
+        left: 81rpx;
+      }
+    }
+
+    .listSearch {
+      height: 120rpx;
+      padding: 26rpx 32rpx;
+      position: relative;
+      z-index: 1;
+      background: #f5f5f5;
+      input {
+        background: #fafafa;
+        font-size: 30rpx;
+        padding-left: 74rpx;
+        height: 70rpx;
+        border-radius: 3rpx;
+      }
+      icon {
+        position: absolute;
+        top: 42rpx;
+        z-index: 15;
+        left: 46rpx;
+      }
+    }
+  }
+
+  .showNodeCont {
+    .showNodes {
+      display: none;
+    }
+    .showNodes.active {
+      display: block;
+    }
+    
+  }
+}
+
+</style>
