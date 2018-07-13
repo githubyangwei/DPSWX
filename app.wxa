@@ -9,7 +9,6 @@
       usingComponents: {},
       pages: [
 
-        'pages/bookAll/lineAndPage/line',
 
         'pages/home/index',
         'pages/book/bookList',
@@ -25,6 +24,7 @@
         'pages/bookAll/nodeLink/linkNode',
         'pages/bookAll/lineAndPage/bookMenu',
         'pages/bookAll/lineAndPage/page',
+        'pages/bookAll/lineAndPage/line',
 
         'pages/wxUser/userHome',
         'pages/wxUser/userLink',
