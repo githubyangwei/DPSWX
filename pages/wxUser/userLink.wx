@@ -1,35 +1,21 @@
 <template>
   <view class="userConts">
-    <view class="sticky-in-relative-container">
-      <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap>
 
-        <view class="userTopCont">
-          <view class="topTables">
-            <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
-            <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
-          </view>
-          <view class="listSearch " bindtap="turnToSearch">
-            <icon type="search" size="18" bindtap="searchACT"></icon>
-            <input type="search"   disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
-          </view>
-        </view>
-
-        <view class="userTopCont" slot="sticky">
-          <view class="topTables">
-            <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
-            <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
-          </view>
-          <view class="listSearch " bindtap="turnToSearch">
-            <icon type="search" size="18" bindtap="searchACT"></icon>
-            <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
-          </view>
-        </view>
-
-      </ui-sticky>
+    <view class="userInfo">
+      <view class="userPhoto">
+        <image src="../../static/image/user.png" />
+      </view>
+      <view class="userNames">
+        <text style="font-size:30rpx;font-weight:bold;">王大崔</text>
+      </view>
+      <view class="userPhone">
+        <text style="font-size:28rpx;">13800138000</text>
+      </view>
     </view>
+    <view class="userInfoTitle {{titleShowBol}}">{{titleStr}}</view>
 
     <view class="showNodeCont">
-      <view class="showNodes  {{showType == 0 ?'active':''}}">
+      <view class="showNodes ">
 
         <view class="nodeCont">
           <view class="ImgConts">
@@ -39,6 +25,7 @@
             <view class="line1">
               <text>果石</text>
               <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+              <text class="nodeRelativeUser">兄弟</text>
               <view class="nodeParent">陈*柏-成*香</view>
             </view>
             <view class="line2">
@@ -63,6 +50,7 @@
             <view class="line1">
               <text>果石2</text>
               <span color="#FFBE00" class="wxIcon wxIcon-portrait die"></span>
+              <text class="nodeRelativeUser">父亲</text>
               <view class="nodeParent">陈*柏-成*香</view>
             </view>
             <view class="line2">
@@ -79,63 +67,8 @@
           </view>
         </view>
 
-
       </view>
-      <view class="showNodes  {{showType == 1 ?'active':''}}">
 
-
-
-        <view class="nodeCont">
-          <view class="ImgConts">
-            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
-          </view>
-          <view class="nodeDetail">
-            <view class="line1">
-              <text>果石3</text>
-              <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
-              <view class="nodeParent">陈*柏-成*香</view>
-            </view>
-            <view class="line2">
-              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
-            </view>
-            <view class="line3">
-              <text class="nodeDy">代数：45</text>
-              <text class="nodeSort">排行：2</text>
-              <view class="nodeLink">
-                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
-                <text>15</text>
-              </view>
-            </view>
-          </view>
-        </view>
-
-        <view class="nodeCont">
-          <view class="ImgConts">
-            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
-          </view>
-          <view class="nodeDetail">
-            <view class="line1">
-              <text>果石4</text>
-              <span color="#FFBE00" class="wxIcon wxIcon-portrait women"></span>
-              <view class="nodeParent">陈*柏-成*香</view>
-            </view>
-            <view class="line2">
-              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
-            </view>
-            <view class="line3">
-              <text class="nodeDy">代数：45</text>
-              <text class="nodeSort">排行：2</text>
-              <view class="nodeLink">
-                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
-                <text>115</text>
-              </view>
-            </view>
-          </view>
-        </view>
-
-
-
-      </view>
     </view>
 
   </view>
@@ -147,108 +80,75 @@
   }
   export default {
     config: {
-      navigationBarTitleText: ''
+      navigationBarTitleText: '',
+      navigationBarBackgroundColor: "#ff7b52",
     },
     data: {
-      showType: 0,
-      NAV_HEIGHT: 0,
-      scrollTop: 0,
       thisData: "",
-      allData: ""
+      allData: "",
+      titleStr: "",
+      titleShowBol: ""
     },
-    onPageScroll(e) {
-
-      this.setData({
-        scrollTop: e.scrollTop
-      })
-    },
-    topClick: function (e) {
-      this.setData({
-        showType: getData(e, "index")
+    onLoad: function (option) {
+      var type = option.linkType;    //显示类型   1.用户连接 2.我的连接
+      var userId = option.linkId;    //获取用户ID
+      var setTitle = "用户信息";
+      if (type == "2") {
+        setTitle = "我的连接"
+      } else {
+        this.setData({
+          titleStr: "他连接的",
+          titleShowBol: "active"
+        })
+      }
+      wx.setNavigationBarTitle({
+        title: setTitle,
+        success: function () {
+        },
+        fail: function (err) {
+        }
       });
-      wx.pageScrollTo({
-        scrollTop: 0,
-        duration: 200
-      })
-    },
-    turnToSearch:function(){
-      wx.navigateTo({
-        url:'nodeSearch'
-      })
     }
+
   }
 </script>
 
 
 <style lang="less">
-@import url('../bookAll/nodeList/node.less');
+@import url("../bookAll/nodeList/node.less");
 
 .userConts {
   width: 100%;
   min-height: 100%;
   background: #f5f5f5;
-  .userTopCont {
-    height: 200rpx;
-    .topTables {
-      height: 86rpx;
+  .userInfo {
+    height: 255rpx;
+    background: #ff7b52;
+    .userPhoto {
+      padding: 20rpx;
       text-align: center;
-      background: #fff;
-      .topTxt {
-        width: 210rpx;
-        height: 86rpx;
+      image {
+        height: 105rpx;
+        width: 105rpx;
         display: inline-block;
-        color: #808080;
-        font-size: 30rpx;
-        position: relative;
-      }
-      .topTxt.active {
-        color: #333333;
-        font-weight: bold;
-      }
-      .topTxt.active:after {
-        content: " ";
-        display: block;
-        width: 52rpx;
-        height: 8rpx;
-        background: #ff7043;
-        border-radius: 4rpx;
-        position: absolute;
-        bottom: 0;
-        left: 81rpx;
+        border-radius: 60rpx;
       }
     }
-
-    .listSearch {
-      height: 120rpx;
-      padding: 26rpx 32rpx;
-      position: relative;
-      z-index: 1;
-      background: #f5f5f5;
-      input {
-        background: #fafafa;
-        font-size: 30rpx;
-        padding-left: 74rpx;
-        height: 70rpx;
-        border-radius: 3rpx;
-      }
-      icon {
-        position: absolute;
-        top: 42rpx;
-        z-index: 15;
-        left: 46rpx;
-      }
+    .userNames,
+    .userPhone {
+      color: #ffffff;
+      text-align: center;
     }
   }
-
-  .showNodeCont {
-    .showNodes {
-      display: none;
-    }
-    .showNodes.active {
-      display: block;
-    }
-    
+  .userInfoTitle {
+    height: 66rpx;
+    line-height: 66rpx;
+    color: #808080;
+    padding-left: 24rpx;
+    display: none;
+  }
+  .userInfoTitle.active {
+    display: block;
   }
 }
-
 </style>

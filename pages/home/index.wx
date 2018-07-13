@@ -53,6 +53,7 @@ export default {
           res.charSet +
           "路径:" +
           res.path;
+          console.log(this.show)
         that.setData({
           CodeThis: this.show
         });

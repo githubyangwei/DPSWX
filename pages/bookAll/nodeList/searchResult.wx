@@ -1,16 +1,213 @@
 <template>
-  <view></view>
-  
+  <view class="userConts">
+
+    <view class="sticky-in-relative-container">
+      <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap>
+    <view class="tipSearchs">
+      <view class="listSearch">
+        <view class="inputConts">
+          <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名" value="{{searchStr}}">
+
+        </view>
+        <view bindtap="searchACT" class="searchACT">搜索</view>
+      </view>
+    </view>
+
+    <view class="tipSearchs"  slot="sticky">
+      <view class="listSearch">
+        <view class="inputConts">
+          <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名" value="{{searchStr}}">
+
+        </view>
+        <view bindtap="searchACT" class="searchACT">搜索</view>
+      </view>
+    </view>
+
+</ui-sticky>
+    </view>
+
+    <view class="showNodeCont">
+      <view class="showNodes ">
+
+        <view class="nodeCont">
+          <view class="ImgConts">
+            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>果石</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+              <view class="nodeParent">陈*柏-成*香</view>
+            </view>
+            <view class="line2">
+              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：45</text>
+              <text class="nodeSort">排行：2</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>15</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="nodeCont">
+          <view class="ImgConts">
+            <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>果石2</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-portrait die"></span>
+              <view class="nodeParent">陈*柏-成*香</view>
+            </view>
+            <view class="line2">
+              <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：45</text>
+              <text class="nodeSort">排行：2</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>115</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+    
+
+
+      </view>
+     
+
+    </view>
+
+  </view>
 </template>
 
 <script>
-export default {
-  config: {
-    navigationBarTitleText: '搜索结果'
-  },
-  data: {}
-}
+  var getData = ($obj, string) => {
+    return $obj.currentTarget.dataset[string];
+  }
+  export default {
+    config: {
+      navigationBarTitleText: '搜索结果'
+    },
+    data: {
+      searchStr: "",
+      NAV_HEIGHT: 0,
+      scrollTop: 0,
+      thisData: "",
+      allData: ""
+    },
+    onPageScroll(e) {
+      this.setData({
+        scrollTop: e.scrollTop
+      })
+    },
+    onLoad: function (options) {
+      var SsearchStr= options.searchStr;
+      this.setData({
+        searchStr: options.searchStr
+      });
+      console.log(SsearchStr)
+    },
+    //搜索值获取/赋值
+    searchTxtIn: function (e) {
+      this.setData({
+        searchStr: e.detail.value,
+      })
+    },
+    //搜索事件
+    searchACT: function () {
+      var $str = this.data.searchStr;
+      if ($str == "") {
+        wx.showModal({
+          content: "请输入搜索关键字进行搜索",
+          showCancel: false,
+          confirmText: "确定"
+        })
+      } else {
+
+        //处理本地搜索历史；
+        var menSearch = [];
+        try {
+          var value = wx.getStorageSync('menSearch');
+          value = (value.split("")[0] == "," ? value.substring(1) : value)
+          menSearch = value.split(',');
+        } catch (e) { }
+        var havaSearch = true;
+        for (var i in menSearch) {
+          if ($str == menSearch[i]) {
+            havaSearch = false;
+          }
+        }
+        if (havaSearch) {
+          menSearch.push($str);
+        }
+        if(menSearch.length>8)menSearch=menSearch.splice(menSearch.length-8);
+        try {
+          wx.setStorageSync('menSearch', menSearch.toString())
+        } catch (e) {
+        }
+
+        console.log(menSearch)
+      }
+    },
+  }
 </script>
 
+
 <style lang="less">
+@import url('node.less');
+
+.userConts {
+  width: 100%;
+  min-height: 100%;
+  background: #f5f5f5;
+ .tipSearchs {
+  border-top: 1rpx solid #e6e6e6;
+  height: 106rpx;
+  padding: 20rpx 24rpx;
+  position: relative;
+  font-size: 24rpx;
+  line-height: 65rpx;
+  background:#f5f5f5;
+  .inputConts {
+    height: 65rpx;
+    padding-right: 108rpx;
+    border: 1rpx solid #e6e6e6;
+    border-top-left-radius: 8rpx;
+    border-bottom-left-radius: 8rpx;
+    box-sizing: border-box;
+    background: #fafafa;
+    input {
+      height: 61rpx;
+      width: 100%;
+      background: #fafafa;
+      padding-left: 10rpx;
+    }
+  }
+  .searchACT {
+    position: absolute;
+    height: 65rpx;
+    width: 110rpx;
+    top: 20rpx;
+    right: 24rpx;
+    background: #ff7b52;
+    text-align: center;
+
+    border: 1rpx solid #e6e6e6;
+    border-top-right-radius: 8rpx;
+    border-bottom-right-radius: 8rpx;
+    color: #fff;
+    z-index: 5;
+  }
+}
+
+}
+
 </style>

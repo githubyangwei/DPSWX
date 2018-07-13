@@ -1,15 +1,63 @@
 <template>
-  <view></view>
+  <view>
+    <view class="loadImg">
+      <image src="../../static/image/loadVifi.gif" hover-class="hoverTurn" />
+    </view>
+  </view>
 </template>
 
+
 <script>
-export default {
-  config: {
-    navigationBarTitleText: ''
-  },
-  data: {}
-}
+  export default {
+    config: {
+      navigationBarTitleText: '登录验证中...'
+    },
+    data: {},
+    onLoad: function (option) {
+      //wx.login   查询是否有用户有用户的直接登录getSetting  返回之前的页面
+      //           无用户的跳转login页面
+      //           有用户但无权限的 跳转login 同时显示微信一键登录
+      console.log(option.turnUrl)
+      setTimeout(() => {
+        wx.getSetting({
+          success: function (res) {
+            console.log(res)
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+              wx.getUserInfo({
+                success: function (res) {
+                  console.log(res.userInfo)
+                  try {
+                    wx.setStorageSync('userObj', JSON.stringify(res.userInfo));
+                    wx.redirectTo({
+                      url: '/' + unescape(option.turnUrl)
+                    })
+                  } catch (e) {
+                  }
+                }
+              })
+            } else {
+              wx.redirectTo({
+                url: '/pages/home/login?turnUrl=' + option.turnUrl
+              })
+            }
+          }
+        })
+      }, 5000);
+
+    }
+  }
 </script>
 
 <style lang="less">
+.loadImg{
+  position: relative;
+  top: 300rpx;
+  text-align: center;
+  image{
+    width: 180rpx;
+    height: 232rpx;
+    display: inline-block;
+  }
+}
 </style>

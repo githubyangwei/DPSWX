@@ -1,0 +1,41 @@
+<template>
+  <view class="user-tips" bindtap="handleTap">
+    <image src="{{imgUrl}}" hover-class="hoverTurn" />
+  </view>
+</template>
+<script>
+  export default {
+    data: {
+      imgUrl: wx.getLocalUserPhoto().avatarUrl
+    },
+    created: function () {
+      console.log(this.data.imgUrl)
+      var that = this;
+      if (wx.getLocalUserPhoto().language == undefined) {
+        wx.redirectTo({
+          url: '/pages/home/load?turnUrl=' + escape(wx.getCurrentPageUrlWithArgs())
+        })
+      }
+    },
+    methods: {
+      handleTap() {
+        wx.navigateTo({
+          url: '/pages/wxUser/userHome'
+        })
+      }
+    }
+  }
+</script>
+<style lang="less">
+.user-tips {
+  position: fixed;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 55rpx;
+  overflow: hidden;
+  left: 10rpx;
+  bottom: 50rpx;
+  z-index: 11;
+  box-shadow: #666 0 0px 20px -5px;
+}
+</style>

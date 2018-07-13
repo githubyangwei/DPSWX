@@ -18,7 +18,7 @@
     </view>
 
     <view class="userline">
-      <navigator url="bookList" class="navigator">
+      <navigator url="../wxUser/bookLinkUser" class="navigator">
         <view class="navigator-text">
           <view class="userPhoto">
             <image src="../../static/image/user.png" />
@@ -34,14 +34,14 @@
           </view>
         </view>
         <view class="navigator-arrow">
-          <text class="openMore">全部用户(1.2万)</text>
+          <text class="openMore">已连接用户(1.2万)</text>
         </view>
       </navigator>
     </view>
 
     <view class="ui-row ui-row-border-top ui-row-border-bottom userAndBookAll">
       <view class="ui-col ui-col-border-right ui-col-align-center align-center valign-middle">
-        <navigator url="bookList" class="ui-col-content align-center valign-middle">
+        <navigator url="bookList?totalName=上山打虎&totalKey=123&totalType=1" class="ui-col-content align-center valign-middle">
           <span color="#FFBE00" class="wxIcon wxIcon-shu" style="color: #ff7b52;font-size: 32rpx;"></span>
           总谱
           <text>（6）</text>
@@ -58,7 +58,7 @@
 
     <view class="showMenusCont">
       <view class="menuTitle menuAline">
-        <image src="../../static/image/bookMenu.png" /> 目录
+        <span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span> 目录
       </view>
       <view class="MenuLv1 menuAline">第一篇 世系篇</view>
       <view class="MenuLv2 menuAline">第一章 中华姓氏远祖太昊伏羲</view>
@@ -89,12 +89,19 @@
         </view>
       </view>
     </ui-fixed-view>
+
+
+                <user-tips></user-tips>
+
   </view>
 </template>
 
 <script>
   export default {
     config: {
+      usingComponents: {
+        'user-tips': '../../packages/user-tips'
+      },
       navigationBarTitleText: "家谱名字",
       navigationBarBackgroundColor: "#e5dcca"
     },
@@ -108,14 +115,18 @@
       wx.showToast({
         title: "收藏成功",
         icon: "success",
-        duration: 2000
+        duration: 2000,
+        complete: function () {
+          wx.redirectTo({
+            url: "bookList?totalName=我的收藏&totalKey=userId&totalType=2"
+          });
+        }
       });
+
     },
     readNow: function () {
-      wx.showToast({
-        title: "跳转目录",
-        icon: "loading",
-        duration: 2000
+      wx.navigateTo({
+        url: "../bookAll/lineAndPage/page"
       });
     }
   };

@@ -9,7 +9,7 @@
             <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
           </view>
           <view class="listSearch " bindtap="turnToSearch">
-            <icon type="search" size="18" bindtap="searchACT"></icon>
+            <icon type="search" size="18"></icon>
             <input type="search"   disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
           </view>
         </view>
@@ -20,7 +20,7 @@
             <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
           </view>
           <view class="listSearch " bindtap="turnToSearch">
-            <icon type="search" size="18" bindtap="searchACT"></icon>
+            <icon type="search" size="18"></icon>
             <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
           </view>
         </view>
@@ -147,7 +147,8 @@
   }
   export default {
     config: {
-      navigationBarTitleText: ''
+      navigationBarTitleText: '人物',
+      navigationBarBackgroundColor: "#fff"
     },
     data: {
       showType: 0,
@@ -172,8 +173,10 @@
       })
     },
     turnToSearch:function(){
-      wx.navigateTo({
+      wx.redirectTo({
         url:'nodeSearch'
+
+        
       })
     }
   }

@@ -1,15 +1,190 @@
 <template>
-  <view></view>
+  <view>
+    <view class="tipSearchs">
+      <view class="listSearch">
+        <view class="inputConts">
+          <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名" value="{{searchStr}}">
+
+        </view>
+        <view bindtap="searchACT" class="searchACT">搜索</view>
+      </view>
+    </view>
+    <view class="searchHistory">
+      <view class="hisTitle">历史搜索</view>
+      <view class="historyTips">
+        <text bindtap='selectHistory' wx:for="{{searchHitory}}" wx:key="item" data-text="{{item}}">{{item}}</text>
+
+      </view>
+
+    </view>
+    <view class="searchTips">
+
+      <view class="tipsIcon">
+        <span color="#FFBE00" class="wxIcon wxIcon-dengpao women"></span>
+      </view>
+      <view class="tipsStr">先要搜索到你要连接的人物</view>
+      <view class="tipsStr">再进行连接验证操作哦</view>
+
+    </view>
+
+  </view>
 </template>
 
 <script>
-export default {
-  config: {
-    navigationBarTitleText: '人物搜索'
-  },
-  data: {}
-}
+
+  export default {
+    config: {
+      navigationBarTitleText: '人物搜索',
+      navigationBarBackgroundColor: "#fafafa"
+    },
+    data: {
+      searchStr: "",
+      searchHitory: []
+
+    },
+    onLoad: function () {
+      var getHistory = [];
+      var value = wx.getStorageSync('menSearch');
+      value = (value.split("")[0] == "," ? value.substring(1) : value)
+      if (value == "") {
+        getHistory = [];
+      } else {
+        getHistory = value.split(',');
+      }
+      this.setData({
+        searchHitory: getHistory,
+      })
+      console.log(getHistory)
+    },
+    //搜索值获取/赋值
+    searchTxtIn: function (e) {
+      this.setData({
+        searchStr: e.detail.value,
+      })
+    },
+    //搜索事件
+    searchACT: function () {
+      var $str = this.data.searchStr;
+      if ($str == "") {
+        wx.showModal({
+          content: "请输入搜索关键字进行搜索",
+          showCancel: false,
+          confirmText: "确定"
+        })
+      } else {
+
+        //处理本地搜索历史；
+        var menSearch = [];
+        try {
+          var value = wx.getStorageSync('menSearch');
+          value = (value.split("")[0] == "," ? value.substring(1) : value)
+          menSearch = value.split(',');
+        } catch (e) { }
+        var havaSearch = true;
+        for (var i in menSearch) {
+          if ($str == menSearch[i]) {
+            havaSearch = false;
+          }
+        }
+        if (havaSearch) {
+          menSearch.push($str);
+        }
+        if (menSearch.length > 8) menSearch = menSearch.splice(menSearch.length - 8);
+        try {
+          wx.setStorageSync('menSearch', menSearch.toString())
+        } catch (e) {
+        }
+
+        //处理本地搜索历史；end
+
+        wx.redirectTo({
+          url: 'searchResult?searchStr=' + $str
+        })
+      }
+    },
+    selectHistory: function (e) {
+      var getStr = e.currentTarget.dataset.text;
+      this.setData({
+        searchStr: getStr
+      })
+      console.log(getStr);
+    }
+  }
 </script>
 
 <style lang="less">
+.tipSearchs {
+  height: 106rpx;
+  padding: 20rpx 24rpx;
+  position: relative;
+  font-size: 24rpx;
+  line-height: 65rpx;
+  .inputConts {
+    height: 65rpx;
+    padding-right: 108rpx;
+    border: 1rpx solid #e6e6e6;
+    border-top-left-radius: 8rpx;
+    border-bottom-left-radius: 8rpx;
+    box-sizing: border-box;
+    background: #fafafa;
+    input {
+      height: 61rpx;
+      width: 100%;
+      background: #fafafa;
+      padding-left: 10rpx;
+    }
+  }
+  .searchACT {
+    position: absolute;
+    height: 65rpx;
+    width: 110rpx;
+    top: 20rpx;
+    right: 24rpx;
+    background: #ff7b52;
+    text-align: center;
+
+    border: 1rpx solid #e6e6e6;
+    border-top-right-radius: 8rpx;
+    border-bottom-right-radius: 8rpx;
+    color: #fff;
+    z-index: 5;
+  }
+}
+.searchHistory {
+  padding: 10rpx 24rpx;
+  .hisTitle {
+    color: #4c4c4c;
+    font-size: 28rpx;
+  }
+  .historyTips {
+    margin-top: 20rpx;
+    text {
+      display: inline-block;
+      color: #333333;
+      font-size: 28rpx;
+      padding: 15rpx 40rpx;
+      margin: 0 24rpx 20rpx 0;
+      background: #f5f5f5;
+      border-radius: 60rpx;
+    }
+  }
+}
+.searchTips {
+  margin-top: 156rpx;
+  .tipsIcon {
+    text-align: center;
+    color: #ff7b52;
+    margin-bottom: 10rpx;
+    .wxIcon {
+      font-size: 80rpx;
+    }
+  }
+  .tipsStr {
+    color: #b2b2b2;
+    font-size: 32rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    text-align: center;
+  }
+}
 </style>

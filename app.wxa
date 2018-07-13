@@ -3,56 +3,58 @@
 </template>
 
 <script>
-import system from './static/utils/system'
-export default {
-  config: {
-    usingComponents: {},
-    pages: [
-      'pages/home/index',
-      'pages/book/bookList',
-      'pages/book/bookQrCode',
-      'pages/book/bookDetail',
-      'pages/home/login',
-      'pages/home/load',
-      'pages/bookAll/nodeList/allNode',
-      'pages/bookAll/nodeList/nodeSearch',
-      'pages/bookAll/nodeList/searchResult',
-      'pages/bookAll/nodeList/nodeDetail',
-      'pages/bookAll/nodeLink/selectRelationship',
-      'pages/bookAll/nodeLink/linkNode',
-      'pages/bookAll/lineAndPage/bookMenu',
-      'pages/bookAll/lineAndPage/line',
-      'pages/bookAll/lineAndPage/page',
-      'pages/wxUser/userHome',
-      'pages/wxUser/userCollection',
-      'pages/wxUser/userLink',
-      'pages/wxUser/bookLinkUser'
-    ],
-    window: {
-      backgroundTextStyle: 'dark',
-      backgroundColor: '#efefef',
-      navigationBarBackgroundColor: '#ffffff',
-      navigationBarTitleText: '大谱师',
-      navigationBarTextStyle: 'black'
+  import system from './static/utils/system'
+  export default {
+    config: {
+      usingComponents: {},
+      pages: [
+
+        'pages/bookAll/lineAndPage/line',
+
+        'pages/home/index',
+        'pages/book/bookList',
+        'pages/book/bookQrCode',
+        'pages/book/bookDetail',
+        'pages/home/login',
+        'pages/home/load',
+        'pages/bookAll/nodeList/allNode',
+        'pages/bookAll/nodeList/nodeSearch',
+        'pages/bookAll/nodeList/searchResult',
+        'pages/bookAll/nodeList/nodeDetail',
+        'pages/bookAll/nodeLink/selectRelationship',
+        'pages/bookAll/nodeLink/linkNode',
+        'pages/bookAll/lineAndPage/bookMenu',
+        'pages/bookAll/lineAndPage/page',
+
+        'pages/wxUser/userHome',
+        'pages/wxUser/userLink',
+        'pages/wxUser/bookLinkUser',
+      ],
+      window: {
+        backgroundTextStyle: 'dark',
+        backgroundColor: '#efefef',
+        navigationBarBackgroundColor: '#ffffff',
+        navigationBarTitleText: '大谱师',
+        navigationBarTextStyle: 'black'
+      },
+      networkTimeout: {
+        request: 10000
+      },
+      theme: {
+        'theme-color': '#39f'
+      }
     },
-    networkTimeout: {
-      request: 10000
+    globalData: {},
+    onLaunch() {
+      system.attachInfo()
     },
-    theme: {
-      'theme-color': '#39f'
-    }
-  },
-  globalData: {},
-  onLaunch() {
-    system.attachInfo()
-  },
-  onShow() {},
-  onHide() {}
-}
+    onShow() { },
+    onHide() { }
+  }
 </script>
 
 <style lang="less">
-@import './static/styles/index.less';
+@import "./static/styles/index.less";
 .container {
   height: 100%;
   display: flex;

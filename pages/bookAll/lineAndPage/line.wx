@@ -1,15 +1,268 @@
 <template>
-  <view></view>
+  <view class="lineViews" bindtap="richTap">
+
+    <view class="lineConts">
+      <view class="lineTitles">
+        <view class="titleText" wx:for="{{titleArry}}">{{item}}</view>
+      </view>
+
+      <view class="viewLines">
+        <view class="table">
+          <block>
+            <view class="tr" wx:for="{{lineData}}" wx:for-item="lv1">
+              <view class="td">
+                <text>{{lv1.NODE_NAME}}</text>
+              </view>
+
+              <view class="td" wx:if="{{lv1.children}}">
+                <!-- 二级 -->
+                <view class="table">
+                  <block>
+                    <view class="tr" wx:for="{{lv1.children}}" wx:for-item="lv2">
+                      <view class="td">
+                        <text>{{lv2.NODE_NAME}}</text>
+                      </view>
+
+                      <view class="td" wx:if="{{lv2.children}}">
+                        <!-- 三级 -->
+                        <view class="table">
+                          <block>
+                            <view class="tr" wx:for="{{lv2.children}}" wx:for-item="lv3">
+                              <view class="td">
+                                <text>{{lv3.NODE_NAME}}</text>
+                              </view>
+
+                              <view class="td" wx:if="{{lv3.children}}">
+                                <!-- 四级 -->
+                                <view class="table">
+                                  <block>
+                                    <view class="tr" wx:for="{{lv3.children}}" wx:for-item="lv4">
+                                      <view class="td">
+                                        <text>{{lv4.NODE_NAME}}</text>
+                                      </view>
+
+                                      <view class="td" wx:if="{{lv4.children}}">
+                                        <!-- 五级 -->
+                                        <view class="table">
+                                          <block>
+                                            <view class="tr" wx:for="{{lv4.children}}" wx:for-item="lv5">
+                                              <view class="td">
+                                                <text>{{lv5.NODE_NAME}}</text>
+                                              </view>
+                                            </view>
+                                          </block>
+                                        </view>
+                                      </view>
+                                    </view>
+                                  </block>
+                                </view>
+                              </view>
+                            </view>
+                          </block>
+                        </view>
+                      </view>
+                    </view>
+                  </block>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <view class="pageView {{menuControl}}">
+        <span class="cUp">上一节</span>
+        <span class="cMenu" bindtap="turnToMenu">
+          <span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span>
+        </span>
+        <span class="cDown">下一节</span>
+      </view>
+    </view>
 </template>
 
 <script>
-export default {
-  config: {
-    navigationBarTitleText: '谱系预览'
-  },
-  data: {}
-}
+  function formatTree(as, idStr, pidStr, chindrenStr) {
+    //格式化数据
+    as.sort(function(a,b){
+            return a.RELATION_SORT - b.RELATION_SORT;
+        });
+    var r = [],
+      hash = {},
+      id = idStr,
+      pid = pidStr,
+      children = chindrenStr,
+      i = 0,
+      j = 0,
+      a = JSON.parse(JSON.stringify(as)),
+      len = a.length;
+    for (; i < len; i++) {
+      hash[a[i][id]] = a[i];
+    }
+    for (; j < len; j++) {
+      var aVal = a[j],
+        hashVP = hash[aVal[pid]];
+      if (hashVP) {
+        !hashVP[children] && (hashVP[children] = []);
+        hashVP[children].push(aVal);
+      } else {
+        r.push(aVal);
+      }
+    }
+    return r;
+  };
+
+  export default {
+    config: {
+      navigationBarTitleText: '谱系名称',
+      navigationBarBackgroundColor: "#ece7d8"
+    },
+    data: {
+      nodes: '',
+      menuControl: "",
+      titleArry: [],
+      lineData: ""
+    },
+    showLog: function () {
+      wx.showConfirm("asfasfasf");
+      return false;
+    },
+    richTap: function (e) {
+      var that = this;
+      var wWidth = wx.WIN_WIDTH;
+      var wHeight = wx.WIN_HEIGHT;
+      var xl = wWidth / 4,
+        xh = xl * 3,
+        yl = wHeight / 4,
+        yh = yl * 3;
+      var x = e.detail.x, y = e.detail.y;
+      if (x > xl && x < xh && y > yl && y < yh) {
+        that.setData({
+          menuControl: (that.data.menuControl == "" ? "active" : "")
+        })
+      } else {
+        that.setData({
+          menuControl: ""
+        })
+      }
+    },
+    turnToMenu: function () {
+      wx.redirectTo({
+        url: 'bookMenu'
+      })
+    },
+    onLoad: function () {
+      var that = this;
+      wx.request({
+        url: 'https://githubyangwei.github.io/resource/plug/test', //仅为示例，并非真实的接口地址
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          var getData = res.data;
+          getData = formatTree(getData, 'NODE_ID', 'RELATION_RELATED_ID', 'children');
+          console.log(getData)
+          var startNum = getData[0].NODE_NUMBER;
+          var titleArry = [];
+          for (var i = 0; i < 5; i++) {
+            titleArry.push(wx.intToChinese(startNum))
+            startNum++;
+          }
+          that.setData({
+            titleArry: titleArry,
+            lineData: getData
+          })
+
+
+        }
+      })
+    }
+
+  }
 </script>
 
 <style lang="less">
+.lineViews {
+  background: #d8cca7;
+  width: 100%;
+  min-height: 100%;
+  color: #332e26;
+
+  .lineConts {
+    .lineTitles {
+      height: 125rpx;
+      padding: 30rpx 0 30rpx 22rpx;
+      .titleText {
+        height: 65rpx;
+        line-height: 65rpx;
+        width: 125rpx;
+        text-align: center;
+        background: #b39e55;
+        float: left;
+        font-size: 26rpx;
+        color: #323333;
+        margin-right: 21rpx;
+      }
+      .titleText:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  // 测试
+  .viewLines {
+    margin: 22rpx;
+    display: table;
+    .table {
+      border: 0px solid darkgray;
+    }
+    .tr {
+      display: flex;
+      width: 100%;
+      justify-content: left;
+      align-items: top;
+    }
+    .td {
+      font-size: 26rpx;
+      justify-content: center;
+      text-align: center;
+      text {
+        width: 141rpx;
+        height: 65rpx;
+        display: block;
+        color: #332e26;
+      }
+    }
+  }
+
+  // 测试
+
+  .pageView {
+    position: fixed;
+    height: 120rox;
+    line-height: 120rpx;
+    padding: 0 55rpx;
+    bottom: -130rpx;
+    width: 100%;
+    background: #fff;
+    left: 0;
+    font-size: 30rpx;
+    transition: bottom 0.5s;
+    -moz-transition: bottom 0.5s;
+    -webkit-transition: bottom 0.5s;
+    -o-transition: bottom 0.5s;
+    .cUp {
+      float: left;
+    }
+    .cMenu {
+      position: absolute;
+      left: 359rpx;
+    }
+    .cDown {
+      float: right;
+    }
+  }
+  .pageView.active {
+    bottom: 0;
+  }
+}
 </style>
