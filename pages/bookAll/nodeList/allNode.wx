@@ -10,7 +10,7 @@
           </view>
           <view class="listSearch " bindtap="turnToSearch">
             <icon type="search" size="18"></icon>
-            <input type="search"   disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
+            <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
           </view>
         </view>
 
@@ -31,7 +31,7 @@
     <view class="showNodeCont">
       <view class="showNodes  {{showType == 0 ?'active':''}}">
 
-        <view class="nodeCont">
+        <view class="nodeCont" bindtap="turnToUsers">
           <view class="ImgConts">
             <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
           </view>
@@ -55,7 +55,7 @@
           </view>
         </view>
 
-        <view class="nodeCont">
+        <view class="nodeCont" bindtap="turnToUsers">
           <view class="ImgConts">
             <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
           </view>
@@ -79,13 +79,10 @@
           </view>
         </view>
 
-
       </view>
       <view class="showNodes  {{showType == 1 ?'active':''}}">
 
-
-
-        <view class="nodeCont">
+        <view class="nodeCont" bindtap="turnToUsers">
           <view class="ImgConts">
             <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
           </view>
@@ -109,7 +106,7 @@
           </view>
         </view>
 
-        <view class="nodeCont">
+        <view class="nodeCont" bindtap="turnToUsers">
           <view class="ImgConts">
             <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
           </view>
@@ -132,8 +129,6 @@
             </view>
           </view>
         </view>
-
-
 
       </view>
     </view>
@@ -172,11 +167,14 @@
         duration: 200
       })
     },
-    turnToSearch:function(){
+    turnToSearch: function () {
       wx.redirectTo({
-        url:'nodeSearch'
-
-        
+        url: 'nodeSearch'
+      })
+    },
+    turnToUsers: function () {
+      wx.redirectTo({
+        url: 'nodeDetail'
       })
     }
   }
@@ -184,7 +182,7 @@
 
 
 <style lang="less">
-@import url('node.less');
+@import url("node.less");
 
 .userConts {
   width: 100%;
@@ -250,8 +248,6 @@
     .showNodes.active {
       display: block;
     }
-    
   }
 }
-
 </style>

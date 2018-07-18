@@ -31,7 +31,9 @@
         xh = xl * 3,
         yl = wHeight / 4,
         yh = yl * 3;
-      var x = e.detail.x, y = e.detail.y;
+      var x = e.changedTouches["0"].clientX, y = e.changedTouches["0"].clientY;
+      console.log(x,y)
+      console.log(e)
       if (x > xl && x < xh && y > yl && y < yh) {
         that.setData({
           menuControl: (that.data.menuControl == "" ? "active" : "")
@@ -90,8 +92,9 @@
   color: #332e26;
   font-size: 36rpx;
   .showView {
-    width: 100%;
     min-height: 100%;
+    margin:0 40rpx;
+    overflow-x: hidden;
     rich-text {
       p {
         color: #332e26;
@@ -99,6 +102,7 @@
       }
       img {
         display: block;
+        width: 100%;
       }
     }
   }

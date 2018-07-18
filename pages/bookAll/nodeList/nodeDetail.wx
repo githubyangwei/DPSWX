@@ -1,15 +1,602 @@
 <template>
-  <view></view>
+  <view class="nodeViewConts">
+    <view class="topDetail">
+      <view class="DetailConts">
+        <view class="userImgs">
+          <image src="../../../static/image/user.png" hover-class="hoverTurn" />
+          <span color="#FFBE00" class="wxIcon wxIcon-icfemale men"></span>
+          <!-- 男 wxIcon-icfemale men  女  wxIcon-icmale women-->
+        </view>
+        <view class="detailName">
+          张大仙
+          <span class="lifeOr ">殁</span>
+          <!-- die  死亡-->
+        </view>
+        <view class="moerInfo">
+          <view class="infoDs">
+            <span color="#FFBE00" class="wxIcon wxIcon-fmgx" style="font-size:30rpx;"></span>
+            <text>陈杰伦-成小双 之子（入继）</text>
+          </view>
+          <view class="infoDs">
+            <span color="#FFBE00" class="wxIcon wxIcon-shu"></span>
+            <text>果石庄六续会云宗谱·卷三 / 仕瀚史册公位下支系仕瀚史册公位下支系</text>
+          </view>
+          <view class="infoDs">
+            <span color="#FFBE00" class="wxIcon wxIcon-lianjie"></span>
+            <text>2018-06-10 李迪迪</text>
+          </view>
+        </view>
+        <view class="dxTurn {{authorStr}}" bindtap="turnDx">吊线图</view>
+      </view>
+    </view>
+    <view class="userMoreInfo">
+      <view class="userMoreInfoInner {{authorStr}}">
+        <view class="relationPic">
+          <view style="height:600rpx;">
+            <ec-canvas id="mychart-dom-pie" style="height:600rpx;width:750rpx;" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+          </view>
+
+        </view>
+
+        <view class="nodeText">
+          <view>
+            <span>李小迪</span>
+            <span>长子</span>
+            字洪福行疏四
+          </view>
+          <view>生于清道光十九年己亥七月甘一日末</view>
+          <view>殁于民国七年戊午九月十三日未时 </view>
+          <view>葬耀科下首大园岡扦作寅山申向</view>
+        </view>
+
+        <view class="nodeSingleBlocks">
+          <div>妻子</div>
+          <span>朱氏</span>
+          合葬罗山朱堂乡 建有墓志 合葬罗山朱堂乡 建有墓志 合葬罗山朱堂乡 建有墓志 合葬罗山朱堂乡 建有墓志
+        </view>
+
+        <view class="nodeSingleBlocks" style="padding:25rpx 30rpx;">
+          <div>生三子一女</div>
+          <span>朱言</span>
+          <span>朱琴</span>
+          <span>朱度</span>
+          <span>朱发</span>
+          <span>朱非</span>
+        </view>
+
+        <view class="connectDetail">
+          <view class="connectTitle">
+            连接他的
+          </view>
+          <view class="userline">
+            <navigator url="../../wxUser/userLink?linkType=1&linkId=123" class="navigator">
+              <view class="navigator-text">
+                <view class="userPhoto">
+                  <image src="../../../static/image/user.png" />
+                </view>
+                <view class="userInfo">
+                  <view class="userLine1">
+                    <text>大蛇丸</text>
+                    <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+
+                  </view>
+                  <view class="userLine2">
+                    <span color="#FFBE00" class="wxIcon wxIcon-guanlian " style="color: #808080;font-size:26rpx"></span>
+                    <text>12</text>
+                  </view>
+
+                </view>
+
+                <view class="linkNode">
+                  <span color="#FFBE00" class="wxIcon wxIcon-lianjie " style="color: #808080;font-size:26rpx"></span>
+                  2018-01-12
+                  <!-- 最后连接的用户 -->
+                </view>
+
+              </view>
+              <view class="navigator-arrow">
+              </view>
+            </navigator>
+          </view>
+
+          <view class="userline">
+            <navigator url="../../wxUser/userLink?linkType=2&linkId=123" class="navigator">
+              <view class="navigator-text">
+                <view class="userPhoto">
+                  <image src="../../../static/image/user.png" />
+                </view>
+                <view class="userInfo">
+                  <view class="userLine1">
+                    <text>大蛇丸</text>
+                    <span color="#FFBE00" class="wxIcon wxIcon-portrait women"></span>
+
+                  </view>
+                  <view class="userLine2">
+                    <span color="#FFBE00" class="wxIcon wxIcon-guanlian " style="color: #808080;font-size:26rpx"></span>
+                    <text>12</text>
+                  </view>
+
+                </view>
+
+                <view class="linkNode">
+                  <span color="#FFBE00" class="wxIcon wxIcon-lianjie " style="color: #808080;font-size:26rpx"></span>
+                  2018-01-12
+                  <!-- 最后连接的用户 -->
+                </view>
+
+              </view>
+              <view class="navigator-arrow">
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+      <view class="overFixed {{authorStr}}">
+        <view class="lineTips"> 想看到更多详细信息</view>
+        <navigator  url="../nodeLink/selectRelationship" class="lineBtns">
+          <text>立即连接</text>
+        </navigator>
+      </view>
+    </view>
+
+    <ui-fixed-view class='bottonLines {{authorStr}}' bottom="0" left="0" right="0">
+      <navigator  url="../nodeLink/selectRelationship" class="lineBtns">
+        <text>立即连接</text>
+      </navigator>
+    </ui-fixed-view>
+  </view>
 </template>
 
 <script>
-export default {
-  config: {
-    navigationBarTitleText: '人物详情'
-  },
-  data: {}
-}
+  import * as echarts from '../../../packages/ec-canvas/echarts';
+  function initChart(canvas, width, height) {
+
+    const chart = echarts.init(canvas, null, { width: width, height: height });
+    canvas.setChart(chart);
+
+    var option = {
+      title: {
+        text: ''
+      },
+      color: ['#ff7b52', '#4592ff'],
+      tooltip: {},
+      animationDurationUpdate: 1500,
+      animationEasingUpdate: 'quinticInOut',
+      label: {
+        normal: {
+          show: true,
+          textStyle: {
+            fontSize: 12
+          },
+        }
+      },
+      legend: {
+        x: "center",
+        show: false,
+        data: ["朋友", "战友", '亲戚']
+      },
+      series: [
+
+        {
+          type: 'graph',
+          layout: 'force',
+          symbolSize: 40,
+          focusNodeAdjacency: true,
+          roam: true,
+          categories: [{
+            name: '朋友',
+            itemStyle: {
+              normal: {
+                color: "#009800",
+              }
+            }
+          }, {
+            name: '战友',
+            itemStyle: {
+              normal: {
+                color: "#4592FF",
+              }
+            }
+          }, {
+            name: '亲戚',
+            itemStyle: {
+              normal: {
+                color: "#3592Ff",
+              }
+            }
+          }],
+          label: {
+            normal: {
+              show: true,
+              textStyle: {
+                fontSize: 10
+              },
+            }
+          },
+          force: {
+            repulsion: 400
+          },
+          edgeSymbolSize: [4, 50],
+          edgeLabel: {
+            normal: {
+              show: true,
+              textStyle: {
+                fontSize: 10
+              },
+              formatter: "{c}"
+            }
+          },
+          data: [{
+            name: '徐贱云',
+            draggable: true,
+          }, {
+            name: '冯可梁',
+            category: 1,
+            draggable: true,
+          }, {
+            name: '邓志荣',
+            category: 1,
+            draggable: true,
+          }, {
+            name: '李荣庆',
+            category: 1,
+            draggable: true,
+          }, {
+            name: '郑志勇',
+            category: 1,
+            draggable: true,
+          }, {
+            name: '赵英杰',
+            category: 1,
+            draggable: true,
+          }],
+          links: [{
+            source: 0,
+            target: 1,
+            category: 0,
+            value: '朋友'
+          }, {
+            source: 0,
+            target: 2,
+            value: '战友'
+          }, {
+            source: 0,
+            target: 3,
+            value: '房东'
+          }, {
+            source: 0,
+            target: 4,
+            value: '朋友'
+          }, {
+            source: 0,
+            target: 5,
+            value: '朋友'
+          }, {
+            source: 0,
+            target: 12,
+            value: '朋友'
+          }],
+          lineStyle: {
+            normal: {
+              opacity: 0.9,
+              width: 1,
+              curveness: 0
+            }
+          }
+        }
+      ]
+    };
+
+
+    chart.setOption(option);
+    return chart;
+  }
+
+  export default {
+    config: {
+      "usingComponents": {
+        "ec-canvas": "../../../packages/ec-canvas"
+      },
+      navigationBarTitleText: '人物详情',
+      navigationBarBackgroundColor: "#ff7b52",
+      navigationBarTextStyle: "#fff"
+    },
+    data: {
+      ec: {
+        onInit: initChart
+      },
+      authorStr: "active",
+    },
+    turnDx: function () {
+      wx.redirectTo({
+        url: '../lineAndPage/line?sid=f61261c97b8f42b5b90f92ef8eff32fe'
+      })
+    }
+  }
 </script>
 
 <style lang="less">
+.nodeViewConts {
+  background: #f7f7f7;
+  width: 100%;
+  min-height: 100%;
+  .topDetail {
+    height: 316rpx;
+    background: #ff7b52;
+    position: relative;
+    margin-bottom: 78rpx;
+    .DetailConts {
+      position: absolute;
+      top: 38rpx;
+      width: 670rpx;
+      height: 357rpx;
+      background: #fff;
+      left: 40rpx;
+      padding-top: 96rpx;
+      .userImgs {
+        width: 102rpx;
+        height: 102rpx;
+        position: absolute;
+        left: 274rpx;
+        top: -28rpx;
+        .wxIcon {
+          font-size: 40rpx;
+          position: absolute;
+          bottom: -20rpx;
+          right: -20rpx;
+          background: #fff;
+          border-radius: 20rpx;
+          width: 40rpx;
+          line-height: 40rpx;
+          height: 40rpx;
+        }
+        .wxIcon.men {
+          color: #4c99a7;
+        }
+        .wxIcon.women {
+          color: #a74c4c;
+        }
+        .wxIcon.die {
+          color: #999;
+        }
+      }
+
+      .detailName {
+        text-align: center;
+        font-size: 30rpx;
+        color: #000;
+        font-weight: bold;
+        .lifeOr {
+          display: none;
+          width: 30rpx;
+          height: 30rpx;
+          background: #000;
+          font-weight: normal;
+          color: #fff;
+          font-size: 20rpx;
+          position: relative;
+          top: -3rpx;
+        }
+        .lifeOr.die {
+          display: inline-block;
+        }
+      }
+
+      .moerInfo {
+        margin-top: 20rpx;
+        .infoDs {
+          height: 60rpx;
+          line-height: 60rpx;
+          margin: 0 30rpx;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          color: #333333;
+          font-size: 24rpx;
+          span {
+            color: #ff6200;
+            font-size: 24rpx;
+            margin-right: 15rpx;
+          }
+        }
+      }
+      .dxTurn {
+        height: 40rpx;
+        line-height: 40rpx;
+        font-size: 24rpx;
+        color: #fff;
+        background: #ff7b52;
+        border-radius: 4rpx;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding: 0 10rpx;
+        display: none;
+      }
+      .dxTurn.active {
+        display: block;
+      }
+    }
+  }
+  .userMoreInfo {
+    padding-top: 10rpx;
+    position: relative;
+    .userMoreInfoInner {
+      filter: blur(5px);
+    }
+    .userMoreInfoInner.active {
+      filter: none;
+      padding-bottom: 110rpx;
+    }
+    .nodeText {
+      margin: 24rpx;
+      padding: 15rpx 30rpx;
+      background: #fff;
+      box-shadow: #666 0 0px 20px -5px;
+      view {
+        height: 44rpx;
+        line-height: 44rpx;
+        font-size: 24rpx;
+        color: #333333;
+      }
+    }
+    span {
+      color: #ff6200;
+      margin-right: 15rpx;
+    }
+    .nodeSingleBlocks {
+      padding: 15rpx 30rpx;
+      margin: 24rpx;
+      line-height: 44rpx;
+      color: #333;
+      background: #fff;
+      box-shadow: #666 0 0px 20px -5px;
+
+      div {
+        display: inline-block;
+        padding: 0 20rpx;
+        margin-right: 15rpx;
+        background: #ff6200;
+        color: #fff;
+        border-radius: 5rpx;
+      }
+    }
+    .connectTitle {
+      height: 60rpx;
+      line-height: 60rpx;
+      padding-left: 24rpx;
+      font-size: 28rpx;
+      color: #808080;
+    }
+    .active.overFixed {
+      display: none;
+    }
+    .overFixed {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding-top: 220rpx;
+      text-align: center;
+      top: 0;
+      left: 0;
+      .lineTips {
+        color: #f03900;
+        font-size: 36rpx;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.lineBtns {
+  width: 480rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #ff7043;
+  color: #fff;
+  border-radius: 8rpx;
+  margin: 45rpx auto 10rpx;
+  text-align: center;
+}
+.bottonLines {
+  display: none;
+  .lineBtns {
+    width: 90%;
+  }
+}
+.bottonLines.active {
+  display: block;
+}
+.userline {
+  height: 124rpx;
+  background: #fff;
+  position: relative;
+  margin-bottom: 1px;
+  .userPhoto {
+    width: 68rpx;
+    height: 68rpx;
+    border-radius: 35rpx;
+    overflow: hidden;
+    float: left;
+    margin-right: 16rpx;
+  }
+  .userInfo {
+    position: absolute;
+    left: 140rpx;
+    height: 125rpx;
+    top: 15rpx;
+    .userLine1,
+    .userLine2 {
+      height: 48rpx;
+      line-height: 48rpx;
+    }
+    .userLine1 {
+      color: #232323;
+      font-size: 32rpx;
+      .wxIcon {
+        margin-left: 20rpx;
+      }
+      .men {
+        color: #4c99a7;
+      }
+      .women {
+        color: #a74c4c;
+      }
+    }
+    .userLine2 {
+      color: #4c4c4c;
+      .wxIcon {
+        margin-right: 10rpx;
+      }
+    }
+  }
+  .linkNode {
+    height: 65rpx;
+    line-height: 64rpx;
+    float: right;
+    padding-right: 45rpx;
+    font-size: 24rpx;
+    color: #4c4c4c;
+  }
+
+  .navigator {
+    padding: 30rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .navigator:before {
+    content: " ";
+    position: absolute;
+    left: 30rpx;
+    top: 0;
+    right: 30rpx;
+    height: 1px;
+    border-top: 1rpx solid #d8d8d8;
+    color: #666666;
+  }
+  .navigator:first-child:before {
+    display: none;
+  }
+  .navigator-text {
+    flex: 1;
+  }
+  .navigator-arrow {
+    padding-right: 26rpx;
+    position: relative;
+  }
+  .navigator-arrow:after {
+    content: " ";
+    display: inline-block;
+    height: 18rpx;
+    width: 18rpx;
+    border-width: 2rpx 2rpx 0 0;
+    border-color: #888888;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: -8rpx;
+    right: 28rpx;
+  }
+}
 </style>

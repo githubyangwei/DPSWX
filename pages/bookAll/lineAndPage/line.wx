@@ -3,51 +3,90 @@
 
     <view class="lineConts">
       <view class="lineTitles">
-        <view class="titleText" wx:for="{{titleArry}}">{{item}}</view>
+        <view class="titleText" wx:key="key"  wx:for="{{titleArry}}">{{item}}</view>
       </view>
 
       <view class="viewLines">
+
         <view class="table">
           <block>
-            <view class="tr" wx:for="{{lineData}}" wx:for-item="lv1">
+            <view class="tr" wx:for="{{lineData}}" wx:key="key" wx:for-item="lv1">
               <view class="td">
-                <text>{{lv1.NODE_NAME}}</text>
+                <view wx:if="{{lv1.RELATION_RELATED_ID!=null}}" class="tsAts turnTobfs">
+                  <span class="wxIcon wxIcon-zhixiang-zuoshang"></span>
+                </view>
+                <text bindtap="turnToNode">{{lv1.NODE_NAME}}</text>
+                <view wx:if="{{lv1.children!=undefine}}" class="lineafter"></view>
               </view>
 
               <view class="td" wx:if="{{lv1.children}}">
                 <!-- 二级 -->
                 <view class="table">
                   <block>
-                    <view class="tr" wx:for="{{lv1.children}}" wx:for-item="lv2">
+                    <view class="tr" wx:for="{{lv1.children}}" wx:key="key" wx:for-index="lv2Index" wx:for-item="lv2">
                       <view class="td">
-                        <text>{{lv2.NODE_NAME}}</text>
+                        <view wx:if="{{lv2Index<(lv1.children.length-1)}}" class="lineBehind"></view>
+                        <view wx:if="{{lv2Index==(lv1.children.length-1)}}" class="linethisEnd"></view>
+
+                        <view class="lineThisNode"></view>
+                        <view class="lineCircle"></view>
+                        <text bindtap="turnToNode">{{lv2.NODE_NAME}}</text>
+                        <view wx:if="{{lv2.children!=undefine}}" class="lineafter"></view>
+
                       </view>
 
                       <view class="td" wx:if="{{lv2.children}}">
                         <!-- 三级 -->
                         <view class="table">
                           <block>
-                            <view class="tr" wx:for="{{lv2.children}}" wx:for-item="lv3">
+                            <view class="tr" wx:for="{{lv2.children}}" wx:key="key" wx:for-index="lv3Index" wx:for-item="lv3">
                               <view class="td">
-                                <text>{{lv3.NODE_NAME}}</text>
+                                <view wx:if="{{lv3Index<(lv2.children.length-1)}}" class="lineBehind"></view>
+                                <view wx:if="{{lv3Index==(lv2.children.length-1)}}" class="linethisEnd"></view>
+
+                                <view class="lineThisNode"></view>
+                                <view class="lineCircle"></view>
+
+                                <text bindtap="turnToNode">{{lv3.NODE_NAME}}</text>
+
+                                <view wx:if="{{lv3.children!=undefine}}" class="lineafter"></view>
+
                               </view>
 
                               <view class="td" wx:if="{{lv3.children}}">
                                 <!-- 四级 -->
                                 <view class="table">
                                   <block>
-                                    <view class="tr" wx:for="{{lv3.children}}" wx:for-item="lv4">
+                                    <view class="tr" wx:for="{{lv3.children}}" wx:key="key" wx:for-index="lv4Index" wx:for-item="lv4">
                                       <view class="td">
-                                        <text>{{lv4.NODE_NAME}}</text>
+                                        <view wx:if="{{lv4Index<(lv3.children.length-1)}}" class="lineBehind"></view>
+                                        <view wx:if="{{lv4Index==(lv3.children.length-1)}}" class="linethisEnd"></view>
+
+                                        <view class="lineThisNode"></view>
+                                        <view class="lineCircle"></view>
+
+                                        <text bindtap="turnToNode">{{lv4.NODE_NAME}}</text>
+
+                                        <view wx:if="{{lv4.children!=undefine}}" class="lineafter"></view>
+
                                       </view>
 
                                       <view class="td" wx:if="{{lv4.children}}">
                                         <!-- 五级 -->
                                         <view class="table">
                                           <block>
-                                            <view class="tr" wx:for="{{lv4.children}}" wx:for-item="lv5">
+                                            <view class="tr" wx:for="{{lv4.children}}" wx:key="key" wx:for-index="lv5Index" wx:for-item="lv5">
                                               <view class="td">
-                                                <text>{{lv5.NODE_NAME}}</text>
+                                                <view wx:if="{{lv4.NODE_CHILDREN_SIZE>0}}" class="tsAts turnToaft">
+                                                  <span class="wxIcon wxIcon-zhixiang-youxia"></span>
+                                                </view>
+
+                                                <view wx:if="{{lv5Index<(lv4.children.length-1)}}" class="lineBehind"></view>
+                                                <view wx:if="{{lv5Index==(lv4.children.length-1)}}" class="linethisEnd"></view>
+
+                                                <view class="lineThisNode"></view>
+                                                <view class="lineCircle"></view>
+                                                <text bindtap="turnToNode">{{lv5.NODE_NAME}}</text>
                                               </view>
                                             </view>
                                           </block>
@@ -83,9 +122,9 @@
 <script>
   function formatTree(as, idStr, pidStr, chindrenStr) {
     //格式化数据
-    as.sort(function(a,b){
-            return a.RELATION_SORT - b.RELATION_SORT;
-        });
+    as.sort(function (a, b) {
+      return a.RELATION_SORT - b.RELATION_SORT;
+    });
     var r = [],
       hash = {},
       id = idStr,
@@ -134,7 +173,7 @@
         xh = xl * 3,
         yl = wHeight / 4,
         yh = yl * 3;
-      var x = e.detail.x, y = e.detail.y;
+      var x = e.changedTouches["0"].clientX, y = e.changedTouches["0"].clientY;
       if (x > xl && x < xh && y > yl && y < yh) {
         that.setData({
           menuControl: (that.data.menuControl == "" ? "active" : "")
@@ -150,7 +189,8 @@
         url: 'bookMenu'
       })
     },
-    onLoad: function () {
+    onLoad: function (option) {
+      console.log(option.sid)
       var that = this;
       wx.request({
         url: 'https://githubyangwei.github.io/resource/plug/test', //仅为示例，并非真实的接口地址
@@ -167,6 +207,7 @@
             titleArry.push(wx.intToChinese(startNum))
             startNum++;
           }
+          console.log(getData)
           that.setData({
             titleArry: titleArry,
             lineData: getData
@@ -175,22 +216,26 @@
 
         }
       })
-    }
+    },
+    turnToNode: function () {
+      wx.navigateTo({
+        url: '../nodeList/nodeDetail'
+      })
+    },
 
   }
 </script>
 
 <style lang="less">
-.lineViews {
+page {
   background: #d8cca7;
-  width: 100%;
-  min-height: 100%;
+}
+.lineViews {
   color: #332e26;
-
   .lineConts {
     .lineTitles {
-      height: 125rpx;
-      padding: 30rpx 0 30rpx 22rpx;
+      height: 105rpx;
+      padding: 30rpx 0 10rpx 22rpx;
       .titleText {
         height: 65rpx;
         line-height: 65rpx;
@@ -210,7 +255,7 @@
 
   // 测试
   .viewLines {
-    margin: 22rpx;
+    margin: 0 22rpx 22rpx;
     display: table;
     .table {
       border: 0px solid darkgray;
@@ -222,14 +267,80 @@
       align-items: top;
     }
     .td {
-      font-size: 26rpx;
       justify-content: center;
       text-align: center;
+      position: relative;
       text {
         width: 141rpx;
         height: 65rpx;
+        line-height: 65rpx;
         display: block;
         color: #332e26;
+        font-size: 30rpx;
+      }
+      .lineBehind {
+        position: absolute;
+        left: 0;
+        top: 32.5rpx;
+        width: 1rpx;
+        background: #e81f18;
+        height: 100%;
+      }
+      .lineafter {
+        position: absolute;
+        top: 32.5rpx;
+        right: 0;
+        height: 1rpx;
+        background: #e81f18;
+        width: 22rpx;
+      }
+      .lineThisNode {
+        position: absolute;
+        top: 32.5rpx;
+        left: 0;
+        height: 1rpx;
+        background: #e81f18;
+        width: 22rpx;
+      }
+      .linethisEnd {
+        position: absolute;
+        top: 41rpx;
+        left: -1rpx;
+        transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        height: 1rpx;
+        background: #e81f18;
+        width: 22rpx;
+      }
+      .lineCircle {
+        width: 8rpx;
+        height: 8rpx;
+        position: absolute;
+        left: 21rpx;
+        border: 1rpx solid #e81f18;
+        border-radius: 8rpx;
+        top: 30rpx;
+      }
+
+      .tsAts {
+        position: absolute;
+        width: 26rpx;
+        height: 26rpx;
+        .wxIcon {
+          font-size: 36rpx;
+          color: #709193;
+        }
+      }
+      .turnTobfs {
+        top: 12rpx;
+        left: 15rpx;
+      }
+      .turnToaft {
+        top: 12rpx;
+        right: 15rpx;
       }
     }
   }
