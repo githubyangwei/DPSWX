@@ -46,7 +46,7 @@ export default {
       var userObj = [];
         try {
           var value = wx.getStorageSync('userObj');
-          userObj = (value.split("")[0] == undefined ? {userPhoto:""} : JSON.parse(value))
+          userObj = (value.split("")[0] == undefined ? {avatarUrl:""} : JSON.parse(value))
         } catch (e) { }
         return userObj;
     }

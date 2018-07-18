@@ -7,11 +7,11 @@
 
   export default {
     data: {
-      imgUrl: wx.getLocalUserPhoto().userPhoto
+      imgUrl: wx.getLocalUserPhoto().avatarUrl
     },
     created: function () {
       var that = this;
-      if (wx.getLocalUserPhoto().userId == undefined) {
+      if (wx.getLocalUserPhoto().nickName == undefined) {
         wx.reLaunch({
           url: '/pages/home/load?turnUrl=' + escape(wx.getCurrentPageUrlWithArgs())
         })
@@ -21,7 +21,7 @@
     },
     attached: function () {
       console.log(this.data.imgUrl)
-      var getIMg = (wx.getLocalUserPhoto().userId == undefined?"":wx.getLocalUserPhoto().userPhoto) ;
+      var getIMg = (wx.getLocalUserPhoto().nickName == undefined?"":wx.getLocalUserPhoto().avatarUrl) ;
       this.setData({
         imgUrl: getIMg
       })
