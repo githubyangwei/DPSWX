@@ -1,0 +1,20 @@
+<view class="QrCodeCont">
+  <view class="QrCodeBks">
+    <view class="QrTitle">
+      <span color="#FFBE00" class="wxIcon wxIcon-shu" style="color: #ff7b52;font-size: 32rpx;margin-right:8rpx;"></span>谱书名
+    </view>
+    <view class="QrImages">
+
+    </view>
+    <view class="QrStr">
+      扫一扫，免费查看共享家谱
+    </view>
+    <view class="QrDownLoad" bindtap="QrDownLoad">
+      保存谱书码
+      <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">ssssssssss</button>
+    </view>
+    <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+  </view>
+  <user-tips _pid="{{_pid}}"></user-tips>
+
+</view>

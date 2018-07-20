@@ -1,0 +1,50 @@
+<view>
+  <view class="topDetail">
+    <view class="DetailConts">
+      <view class="userImgs">
+        <image src="../../../static/image/user.png" hover-class="hoverTurn" />
+        <span color="#FFBE00" class="wxIcon wxIcon-icfemale men"></span>
+        <!-- 男 wxIcon-icfemale men  女  wxIcon-icmale women-->
+      </view>
+      <view class="detailName">
+        张大仙
+        <span class="lifeOr ">殁</span>
+        <!-- die  死亡-->
+      </view>
+      <view class="moerInfo">
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-fmgx" style="font-size:30rpx;"></span>
+          <text>陈杰伦-成小双 之子（入继）</text>
+        </view>
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-shu"></span>
+          <text>果石庄六续会云宗谱·卷三 / 仕瀚史册公位下支系仕瀚史册公位下支系</text>
+        </view>
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-lianjie"></span>
+          <text>2018-06-10 李迪迪</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="Relainput">
+    <text>TA是我的</text>
+    <input type="text" focus="true" adjust-position="true" bindinput="bindKey" maxlength="4" placeholder="输入关系标签（必填），限4字" value="{{relativeStr}}"></input>
+  </view>
+
+  <view class="commonsTips">
+    <view class="TipsTitle">
+      常用标签
+    </view>
+    <view class="TipsConts">
+      <view wx:for="{{RlvArry}}" hoverClass="TipsListCks" class="TipsList" data-str="{{item}}" bindtap="selatRlv">{{item}}</view>
+    </view>
+  </view>
+
+  <ui-fixed-view class="bottonLines {{authorStr}}" bottom="0" left="0" right="0" _pid="{{_pid}}">
+    <navigator open-type="redirect" url="linkNode" class="lineBtns">
+      <text>下一步</text>
+    </navigator>
+  </ui-fixed-view>
+</view>

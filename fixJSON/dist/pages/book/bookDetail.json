@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "ui-fixed-view": "../../packages/touchui-wx-components/ui-fixed-view/dist/index",
+    "user-tips": "../../packages/user-tips/index"
+  },
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#e5dcca"
+}

@@ -1,0 +1,15 @@
+<view class="section">
+  <view class="bannerTop">
+    <image src="../../static/image/logo1.png" />
+  </view>
+
+  <view class="scanCode">
+
+    <image src="../../static/image/scan.png" hover-class="hoverTurn" class="scanCodeBtns" bindtap="scanCodeClick" />
+
+    <view class="readList">
+      <button bindtap="turnTo" hover-class="hoverTurn">查看家谱</button>
+    </view>
+  </view>
+
+</view>

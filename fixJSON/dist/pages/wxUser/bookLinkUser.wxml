@@ -1,0 +1,66 @@
+<view class="showMoreLink">
+
+  <view class="userline">
+    <navigator url="userLink?linkType=1&linkId=123" class="navigator">
+      <view class="navigator-text">
+        <view class="userPhoto">
+          <image src="../../static/image/user.png" />
+        </view>
+        <view class="userInfo">
+          <view class="userLine1">
+            <text>大蛇丸</text>
+            <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+
+          </view>
+          <view class="userLine2">
+            <span color="#FFBE00" class="wxIcon wxIcon-guanlian " style="color: #808080;font-size:26rpx"></span>
+            <text>12</text>
+          </view>
+
+        </view>
+
+        <view class="linkNode">
+          <span color="#FFBE00" class="wxIcon wxIcon-lianjie " style="color: #808080;font-size:26rpx"></span>
+          2018-01-12 陈虎
+          <!-- 最后连接的用户 -->
+        </view>
+
+      </view>
+      <view class="navigator-arrow">
+      </view>
+    </navigator>
+  </view>
+
+  <view class="userline">
+    <navigator url="userLink?linkType=2&linkId=123" class="navigator">
+      <view class="navigator-text">
+        <view class="userPhoto">
+          <image src="../../static/image/user.png" />
+        </view>
+        <view class="userInfo">
+          <view class="userLine1">
+            <text>大蛇丸</text>
+            <span color="#FFBE00" class="wxIcon wxIcon-portrait women"></span>
+
+          </view>
+          <view class="userLine2">
+            <span color="#FFBE00" class="wxIcon wxIcon-guanlian " style="color: #808080;font-size:26rpx"></span>
+            <text>12</text>
+          </view>
+
+        </view>
+
+        <view class="linkNode">
+          <span color="#FFBE00" class="wxIcon wxIcon-lianjie " style="color: #808080;font-size:26rpx"></span>
+          2018-01-12 陈虎
+          <!-- 最后连接的用户 -->
+        </view>
+
+      </view>
+      <view class="navigator-arrow">
+      </view>
+    </navigator>
+  </view>
+
+
+</view>

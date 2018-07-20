@@ -1,0 +1,246 @@
+<template>
+  <view class="userConts">
+
+    <view class="sticky-in-relative-container">
+      <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap>
+        <view class="tipSearchs">
+          <view class="listSearch">
+            <view class="inputConts">
+              <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名" value="{{searchStr}}">
+
+            </view>
+            <view bindtap="searchACT" class="searchACT">搜索</view>
+          </view>
+        </view>
+
+        <view class="tipSearchs" slot="sticky">
+          <view class="listSearch">
+            <view class="inputConts">
+              <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名" value="{{searchStr}}">
+
+            </view>
+            <view bindtap="searchACT" class="searchACT">搜索</view>
+          </view>
+        </view>
+
+      </ui-sticky>
+    </view>
+
+    <view class="showNodeCont">
+      <view class="showNodes ">
+
+        <view class="nodeCont" bindtap="turnToUsers" wx:for="{{allData}}" wx:for-index="Nindex" wx:key="item"  data-tid="{{item.NODE_ID}}">
+          <view class="ImgConts">
+            <image wx:if="{{item.NODE_PHOTO}}" src="{{item.NODE_PHOTO}}" hover-class="hoverTurn" />
+            <view class="nodeTxtImg" wx:else style="background:{{item.Color}}">{{item.NODE_SpsNode}}</view>
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>{{item.NODE_SURNAME+item.NODE_NAME}}</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-{{item.NODE_SEX==0?'portrait men':'nv women'}}"></span>
+              <span class="lifeOr " wx:if="{{item.NODE_LIFE_FLAG=='1'}}">殁</span>
+              <view class="nodeParent" wx:if="{{item.NODE_FATHER_NAME}}">{{item.NODE_FATHER_NAME}}-{{item.NODE_MOTHER_NAME}}</view>
+            </view>
+            <view class="line2">
+              <text>{{item.BOOK_NAME}} / {{item.PROJECT_NAME}}</text>
+              <span class="wxIcon wxIcon-suo menLocked" wx:if="{{item.VISIT_OR=='0'}}"></span>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：{{item.NODE_NUMBER}}</text>
+              <text class="nodeSort">排行：{{item.NODE_FATHER_SORT==null?1:item.NODE_FATHER_SORT}}</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>{{item.CONNECT_SIZE}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+
+  </view>
+</template>
+
+<script>
+  var getData = ($obj, string) => {
+    return $obj.currentTarget.dataset[string];
+  }
+  export default {
+    config: {
+      navigationBarTitleText: '搜索结果'
+    },
+    data: {
+      searchStr: "",
+      NAV_HEIGHT: 0,
+      scrollTop: 0,
+      ColorIndex: 0,
+      allData: [],
+      dataLength: 0,
+      showType: '',
+      index: 1,
+      size: 6,
+      bookId: "",
+      url: "",
+      urlArry: ['node/getNodePaging', 'node/getNodePagingAll'],
+      userId: wx.getLocalUserPhoto().userId
+    },
+    onPageScroll(e) {
+      this.setData({
+        scrollTop: e.scrollTop
+      })
+    },
+    onLoad: function (options) {
+      var SsearchStr = options.searchStr, that = this;
+      this.setData({
+        searchStr: options.searchStr,
+        bookId: options.bookId,
+        url: that.data.urlArry[options.showType]
+      });
+      that.showConts()
+    },
+    //搜索值获取/赋值
+    searchTxtIn: function (e) {
+      this.setData({
+        searchStr: e.detail.value,
+      })
+    },
+    //搜索事件
+    searchACT: function () {
+      var $str = this.data.searchStr, that = this;
+      if ($str == "") {
+        wx.showModal({
+          content: "请输入搜索关键字进行搜索",
+          showCancel: false,
+          confirmText: "确定"
+        })
+      } else {
+
+        //处理本地搜索历史；
+        var menSearch = [];
+        try {
+          var value = wx.getStorageSync('menSearch');
+          value = (value.split("")[0] == "," ? value.substring(1) : value)
+          menSearch = value.split(',');
+        } catch (e) { }
+        var havaSearch = true;
+        for (var i in menSearch) {
+          if ($str == menSearch[i]) {
+            havaSearch = false;
+          }
+        }
+        if (havaSearch) {
+          menSearch.push($str);
+        }
+        if (menSearch.length > 8) menSearch = menSearch.splice(menSearch.length - 8);
+        try {
+          wx.setStorageSync('menSearch', menSearch.toString())
+        } catch (e) {
+        }
+        that.setData({
+          searchStr: $str,
+          index:1,
+        });
+        that.showConts()
+      }
+    },
+    //上拉加载
+    onReachBottom: function () {
+      var that = this;
+      if (that.data.allData.length < that.data.dataLength) {
+        that.setData({
+          index: that.data.index + 1,
+        });
+        that.showConts();
+      }
+    },
+    showConts: function () {
+      var that = this;
+      wx.request({
+        url: wx.url + that.data.url,
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          index: that.data.index,
+          size: that.data.size,
+          bookId: that.data.bookId,
+          userId: that.data.userId,
+          str: that.data.searchStr
+        },
+        success: function (noderes) {
+          var getData = noderes.data.pageData;
+          for (var i in getData) {
+            that.data.ColorIndex++;
+            var AllName = getData[i].NODE_SURNAME.replace(/\s|\xA0/g, "") + getData[i].NODE_NAME.replace(/\s|\xA0/g, "");
+            console.log(AllName, AllName.length)
+            getData[i].NODE_SpsNode = (AllName.length > 2) ? AllName.substring(AllName.length - 2) : AllName;
+            getData[i].Color = wx.colorArry[that.data.ColorIndex % 11];
+            that.data.allData.push(getData[i]);
+          }
+          that.setData({
+            dataLength: noderes.data.limitCount,
+            allData: that.data.allData
+          })
+          wx.hideToast()
+        }
+      })
+    },
+    turnToUsers: function (e) {
+      wx.redirectTo({
+        url: 'nodeDetail?nodeId='+e.currentTarget.dataset.tid
+      })
+    },
+  }
+</script>
+
+
+<style lang="less">
+@import url("node.less");
+
+.userConts {
+  width: 100%;
+  min-height: 100%;
+  background: #f5f5f5;
+  .tipSearchs {
+    border-top: 1rpx solid #e6e6e6;
+    height: 106rpx;
+    padding: 20rpx 24rpx;
+    position: relative;
+    font-size: 24rpx;
+    line-height: 65rpx;
+    background: #f5f5f5;
+    .inputConts {
+      height: 65rpx;
+      padding-right: 108rpx;
+      border: 1rpx solid #e6e6e6;
+      border-top-left-radius: 8rpx;
+      border-bottom-left-radius: 8rpx;
+      box-sizing: border-box;
+      background: #fafafa;
+      input {
+        height: 61rpx;
+        width: 100%;
+        background: #fafafa;
+        padding-left: 10rpx;
+      }
+    }
+    .searchACT {
+      position: absolute;
+      height: 65rpx;
+      width: 110rpx;
+      top: 20rpx;
+      right: 24rpx;
+      background: #ff7b52;
+      text-align: center;
+
+      border: 1rpx solid #e6e6e6;
+      border-top-right-radius: 8rpx;
+      border-bottom-right-radius: 8rpx;
+      color: #fff;
+      z-index: 5;
+    }
+  }
+}
+</style>

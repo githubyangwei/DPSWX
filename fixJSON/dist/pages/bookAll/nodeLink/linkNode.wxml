@@ -1,0 +1,46 @@
+<view>
+  <view class="topDetail">
+    <view class="DetailConts">
+      <view class="userImgs">
+        <image src="../../../static/image/user.png" hover-class="hoverTurn" />
+        <span color="#FFBE00" class="wxIcon wxIcon-icfemale men"></span>
+        <!-- 男 wxIcon-icfemale men  女  wxIcon-icmale women-->
+      </view>
+      <view class="detailName">
+        张大仙
+        <span class="lifeOr ">殁</span>
+        <!-- die  死亡-->
+      </view>
+      <view class="moerInfo">
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-fmgx" style="font-size:30rpx;"></span>
+          <text>陈杰伦-成小双 之子（入继）</text>
+        </view>
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-shu"></span>
+          <text>果石庄六续会云宗谱·卷三 / 仕瀚史册公位下支系仕瀚史册公位下支系</text>
+        </view>
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-lianjie"></span>
+          <text>2018-06-10 李迪迪</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="questionConts">
+    <view class="qTitles">
+      TA的父亲叫什么
+    </view>
+    <view class="qConts">
+      <image src="../../../static/image/selectRlv.png" hover-class="hoverTurn" />
+      <view class="ansNodes">
+
+      </view>
+    </view>
+
+  </view>
+  <view class="lodingLine">
+    <image src="../../../static/image/loadLine{{lineStep}}.png" bindtap="changeStep" hover-class="hoverTurn" />
+  </view>
+</view>

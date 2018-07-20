@@ -1,0 +1,138 @@
+<template>
+  <view class="pageViews" bindtap="richTap">
+    <view class="showView">
+      <rich-text nodes="{{nodes}}"></rich-text>
+    </view>
+
+    <view class="pageView {{menuControl}}">
+      <span class="cUp">上一篇</span>
+      <span class="cMenu" bindtap="turnToMenu"><span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span></span>
+      <span class="cDown" bindtap="turnDown">下一篇</span>
+    </view>
+  </view>
+
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '谱书预览',
+      navigationBarBackgroundColor: "#ebe6d7"
+    },
+    data: {
+      nodes: '',
+      menuControl: ""
+    },
+    richTap: function (e) {
+      var that = this;
+      var wWidth = wx.WIN_WIDTH;
+      var wHeight = wx.WIN_HEIGHT;
+      var xl = wWidth / 4,
+        xh = xl * 3,
+        yl = wHeight / 4,
+        yh = yl * 3;
+      var x = e.changedTouches["0"].clientX, y = e.changedTouches["0"].clientY;
+      console.log(x,y)
+      console.log(e)
+      if (x > xl && x < xh && y > yl && y < yh) {
+        that.setData({
+          menuControl: (that.data.menuControl == "" ? "active" : "")
+        })
+      } else {
+        that.setData({
+          menuControl: ""
+        })
+      }
+    },
+    turnToMenu: function () {
+      wx.redirectTo({
+        url: 'bookMenu'
+      })
+    },
+    turnDown: function () {
+      wx.redirectTo({
+        url: 'line'
+      })
+    },
+    onLoad: function () {
+      var that = this;
+      wx.request({
+        url: 'https://githubyangwei.github.io/test', //仅为示例，并非真实的接口地址
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          var getData = res.data;
+          wx.setNavigationBarTitle({
+            title: getData.articleName,
+            success: function () {
+              console.log('setNavigationBarTitle success')
+            },
+            fail: function (err) {
+              console.log('setNavigationBarTitle fail, err is', err)
+            }
+          });
+
+          //屏蔽&ldquo;   &mdash;   &rdquo;
+
+          that.setData({
+            nodes: getData.articleConetent
+          })
+        }
+      })
+    }
+  }
+</script>
+
+<style lang="less">
+.pageViews {
+  background: #d8cca7;
+  width: 100%;
+  min-height: 100%;
+  color: #332e26;
+  font-size: 36rpx;
+  .showView {
+    min-height: 100%;
+    margin:0 40rpx;
+    overflow-x: hidden;
+    rich-text {
+      p {
+        color: #332e26;
+        font-size: 36rpx;
+      }
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+  .pageView {
+    position: fixed;
+    height: 120rox;
+    line-height: 120rpx;
+    padding: 0 55rpx;
+    bottom: -130rpx;
+    width: 100%;
+    background: #fff;
+    left: 0;
+    font-size: 30rpx;
+    transition: bottom 0.5s;
+    -moz-transition: bottom 0.5s;
+    -webkit-transition: bottom 0.5s;
+    -o-transition: bottom 0.5s;
+    .cUp {
+      float: left;
+    }
+    .cMenu {
+      position: absolute;
+      left: 359rpx;
+    }
+    .cDown {
+      float: right;
+    }
+  }
+  .pageView.active {
+    bottom: 0;
+  }
+}
+</style>

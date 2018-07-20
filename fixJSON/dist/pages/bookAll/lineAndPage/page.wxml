@@ -1,0 +1,13 @@
+<view class="pageViews" bindtap="richTap">
+  <view class="showView">
+    <rich-text nodes="{{nodes}}"></rich-text>
+  </view>
+
+  <view class="pageView {{menuControl}}">
+    <span class="cUp">上一篇</span>
+    <span class="cMenu" bindtap="turnToMenu">
+      <span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span>
+    </span>
+    <span class="cDown" bindtap="turnDown">下一篇</span>
+  </view>
+</view>

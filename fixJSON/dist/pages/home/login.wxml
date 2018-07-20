@@ -1,0 +1,21 @@
+<view>
+  <view class="loginImg">
+    <image src="../../static/image/loginLogo.png" hover-class="hoverTurn" />
+  </view>
+
+  <view class="loginCont loginPhone">
+    <span color="#FFBE00" class="wxIcon wxIcon-shouji"></span>
+    <input type="text" bindinput="bindPhoneKey" placeholder="请输入手机号" value="{{userPhone}}"></input>
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
+    <text>获取手机号</text>
+  </view>
+
+  <view class="loginCont loginCode">
+    <span color="#FFBE00" class="wxIcon wxIcon-yanzhengma2"></span>
+    <input type="text" bindinput="bindYzmKey" placeholder="请输入验证码" value="{{userVcode}}"></input>
+    <button bindtap="getYzm" class="{{yzmClass}}" data-send="{{yzmSend}}">{{yzmStr}}</button>
+  </view>
+
+  <button open-type="getUserInfo" class="loginReg" bindgetuserinfo="bindGetUserInfo">登录</button>
+
+</view>

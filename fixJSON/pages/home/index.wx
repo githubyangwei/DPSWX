@@ -1,0 +1,122 @@
+<template>
+    <view class="section">
+    <view class='bannerTop'>
+        <image src="../../static/image/logo1.png" />
+    </view>      
+
+    <view class="scanCode">
+
+        <image src="../../static/image/scan.png"  hover-class="hoverTurn" class="scanCodeBtns" bindtap="scanCodeClick" />
+
+        <view class="readList">
+          <button bindtap="turnTo" hover-class="hoverTurn" >查看家谱</button>
+        </view>
+      </view>
+
+    </view>
+   
+
+
+</template>
+
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "大谱师",
+    navigationBarBackgroundColor: "#fd7c54",
+    navigationBarTextStyle: "#fff"
+  },
+  data: {
+    CodeThis: 222
+  },
+  onShareAppMessage: function() {
+    return {
+      title: "测试-我要分享",
+      desc: "测试",
+      path: "http://wap.baidu.com",
+      success: function() {}
+    };
+  },
+  //调用系统二维码扫描
+  scanCodeClick: function() {
+    var that = this;
+    var show;
+    wx.scanCode({
+      success: res => {
+        this.show =
+          "结果:" +
+          res.result +
+          "二维码类型:" +
+          res.scanType +
+          "字符集:" +
+          res.charSet +
+          "路径:" +
+          res.path;
+          console.log(this.show)
+        that.setData({
+          CodeThis: this.show
+        });
+        wx.showToast({
+          title: "成功",
+          icon: "success",
+          duration: 2000
+        });
+      },
+      fail: res => {
+        wx.showToast({
+          title: "失败",
+          icon: "success",
+          duration: 2000
+        });
+      },
+      complete: res => {}
+    });
+  },
+  turnTo:function(){
+    wx.navigateTo({
+      url: '/pages/book/bookList?type=search'
+    })
+  }
+  // onGotUserInfo:function(e){
+  //   console.log(e)
+  // },
+  // onGotPhoneNumber:function(e){
+  //   console.log(e)
+  // }
+};
+</script>
+
+<style lang="less">
+@import url(../../static/styles/hover.less);
+.bannerTop {
+  background: #fd7c54;
+  height: 295rpx;
+  width: 100%;
+  text-align: center; 
+  padding-top: 24rpx;
+  image{
+    height:247rpx;
+    width:200rpx;
+    display:inline-block;
+  }
+}
+.scanCode {
+  text-align: center;
+}
+.scanCodeBtns {
+  height: 375rpx;
+  width: 318rpx;
+  display: inline-block;
+  margin: 160rpx 0 190rpx;
+}
+.readList {
+  padding:0 24rpx;
+}
+.readList button {
+  background: #ff7043;
+  color: #fff;
+  font-size: 18px;
+  border-color: #ff7043
+}
+</style>

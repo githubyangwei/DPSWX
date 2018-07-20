@@ -1,0 +1,36 @@
+<view>
+  <view class="sticky-in-relative-container">
+    <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap="" _pid="{{_pid}}">
+      <view class="listSearch {{searchCont}}">
+        <icon type="search" size="18" bindtap="searchACT"></icon>
+        <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="输入关键字搜索家谱" value="{{searchStr}}"></input>
+      </view>
+      <view slot="sticky" class="listSearch {{searchCont}}">
+        <icon type="search" size="18" bindtap="searchACT"></icon>
+        <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="输入关键字搜索家谱" value="{{searchStr}}"></input>
+      </view>
+    </ui-sticky>
+  </view>
+
+  <view class="listConts">
+    <view wx:for="{{listData}}" wx:key="item">
+      <view class="booklist" bindtap="openBook" id="{{item.BOOK_ID}}">
+        <view class="imageblock">
+          <image src="{{item.BOOK_LOGO_IMG}}" hover-class="hoverTurn" />
+          <view class="nameConts"></view>
+        </view>
+        <view class="bookDetail">
+          <view class="bookTitle">
+            <text wx:if="{{item.BOOK_SURNAME}}">【{{item.BOOK_SURNAME}}】</text>{{item.BOOK_NAME}}</view>
+          <view class="bookMore">堂号：{{item.BOOK_HALL_CODE}}</view>
+          <view class="bookMore">编者：{{item.BOOK_AUTHOR}}</view>
+          <view class="bookMore">编纂：{{item.BOOK_TIME}}</view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <user-tips _pid="{{_pid}}"></user-tips>
+
+</view>

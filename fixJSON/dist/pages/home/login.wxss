@@ -1,0 +1,93 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.loginImg {
+  margin: 45rpx 0 35rpx;
+  text-align: center;
+}
+.loginImg image {
+  display: inline-block;
+  width: 172rpx;
+  height: 271rpx;
+}
+.loginCont {
+  height: 110rpx;
+  line-height: 110rpx;
+  margin: 0 25rpx;
+  font-size: 32rpx;
+  position: relative;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+.loginCont .wxIcon {
+  position: absolute;
+  top: 0;
+  left: 30rpx;
+  font-size: 40rpx;
+}
+.loginCont input {
+  margin: 0 112rpx 0 100rpx;
+  height: 110rpx;
+  line-height: 110rpx;
+  width: 380rpx;
+}
+.loginCont button {
+  position: absolute;
+  top: 18rpx;
+  right: 0;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 32rpx;
+  margin: 0;
+  z-index: 5;
+}
+.loginPhone button {
+  opacity: 0;
+}
+.loginPhone text {
+  color: #ff7043;
+  font-size: 32rpx;
+  position: absolute;
+  height: 72rpx;
+  line-height: 72rpx;
+  z-index: 2;
+  top: 18rpx;
+  right: 0;
+}
+.loginCode {
+  margin-bottom: 70rpx;
+}
+.loginCode button {
+  background: #ff7043;
+  color: #fff;
+  width: 220rpx;
+  text-align: center;
+}
+.loginCode button.loadNums {
+  background: #ccc;
+  color: #333;
+}
+.loginReg {
+  margin: 0 25rpx 25rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #ff7043;
+  color: #fff;
+}

@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/book/bookList",
+    "pages/book/bookQrCode",
+    "pages/book/bookDetail",
+    "pages/home/login",
+    "pages/home/load",
+    "pages/bookAll/nodeList/allNode",
+    "pages/bookAll/nodeList/nodeSearch",
+    "pages/bookAll/nodeList/searchResult",
+    "pages/bookAll/nodeList/nodeDetail",
+    "pages/bookAll/nodeLink/linkNode",
+    "pages/bookAll/nodeLink/selectRelationship",
+    "pages/bookAll/lineAndPage/bookMenu",
+    "pages/bookAll/lineAndPage/page",
+    "pages/bookAll/lineAndPage/line",
+    "pages/wxUser/userHome",
+    "pages/wxUser/userLink",
+    "pages/wxUser/bookLinkUser"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#efefef",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "大谱师",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
+  "theme": {
+    "theme-color": "#39f"
+  }
+}

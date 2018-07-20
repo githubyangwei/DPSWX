@@ -1,0 +1,119 @@
+<view class="lineViews" bindtap="richTap">
+
+  <view class="lineConts">
+    <view class="lineTitles">
+      <view class="titleText" wx:key="key" wx:for="{{titleArry}}">{{item}}</view>
+    </view>
+
+    <view class="viewLines">
+
+      <view class="table">
+        <block>
+          <view class="tr" wx:for="{{lineData}}" wx:key="key" wx:for-item="lv1">
+            <view class="td">
+              <view wx:if="{{lv1.RELATION_RELATED_ID!=null}}" class="tsAts turnTobfs">
+                <span class="wxIcon wxIcon-zhixiang-zuoshang"></span>
+              </view>
+              <text bindtap="turnToNode">{{lv1.NODE_NAME}}</text>
+              <view wx:if="{{lv1.children!=undefine}}" class="lineafter"></view>
+            </view>
+
+            <view class="td" wx:if="{{lv1.children}}">
+              <!-- 二级 -->
+              <view class="table">
+                <block>
+                  <view class="tr" wx:for="{{lv1.children}}" wx:key="key" wx:for-index="lv2Index" wx:for-item="lv2">
+                    <view class="td">
+                      <view wx:if="{{lv2Index<(lv1.children.length-1)}}" class="lineBehind"></view>
+                      <view wx:if="{{lv2Index==(lv1.children.length-1)}}" class="linethisEnd"></view>
+
+                      <view class="lineThisNode"></view>
+                      <view class="lineCircle"></view>
+                      <text bindtap="turnToNode">{{lv2.NODE_NAME}}</text>
+                      <view wx:if="{{lv2.children!=undefine}}" class="lineafter"></view>
+
+                    </view>
+
+                    <view class="td" wx:if="{{lv2.children}}">
+                      <!-- 三级 -->
+                      <view class="table">
+                        <block>
+                          <view class="tr" wx:for="{{lv2.children}}" wx:key="key" wx:for-index="lv3Index" wx:for-item="lv3">
+                            <view class="td">
+                              <view wx:if="{{lv3Index<(lv2.children.length-1)}}" class="lineBehind"></view>
+                              <view wx:if="{{lv3Index==(lv2.children.length-1)}}" class="linethisEnd"></view>
+
+                              <view class="lineThisNode"></view>
+                              <view class="lineCircle"></view>
+
+                              <text bindtap="turnToNode">{{lv3.NODE_NAME}}</text>
+
+                              <view wx:if="{{lv3.children!=undefine}}" class="lineafter"></view>
+
+                            </view>
+
+                            <view class="td" wx:if="{{lv3.children}}">
+                              <!-- 四级 -->
+                              <view class="table">
+                                <block>
+                                  <view class="tr" wx:for="{{lv3.children}}" wx:key="key" wx:for-index="lv4Index" wx:for-item="lv4">
+                                    <view class="td">
+                                      <view wx:if="{{lv4Index<(lv3.children.length-1)}}" class="lineBehind"></view>
+                                      <view wx:if="{{lv4Index==(lv3.children.length-1)}}" class="linethisEnd"></view>
+
+                                      <view class="lineThisNode"></view>
+                                      <view class="lineCircle"></view>
+
+                                      <text bindtap="turnToNode">{{lv4.NODE_NAME}}</text>
+
+                                      <view wx:if="{{lv4.children!=undefine}}" class="lineafter"></view>
+
+                                    </view>
+
+                                    <view class="td" wx:if="{{lv4.children}}">
+                                      <!-- 五级 -->
+                                      <view class="table">
+                                        <block>
+                                          <view class="tr" wx:for="{{lv4.children}}" wx:key="key" wx:for-index="lv5Index" wx:for-item="lv5">
+                                            <view class="td">
+                                              <view wx:if="{{lv4.NODE_CHILDREN_SIZE>0}}" class="tsAts turnToaft">
+                                                <span class="wxIcon wxIcon-zhixiang-youxia"></span>
+                                              </view>
+
+                                              <view wx:if="{{lv5Index<(lv4.children.length-1)}}" class="lineBehind"></view>
+                                              <view wx:if="{{lv5Index==(lv4.children.length-1)}}" class="linethisEnd"></view>
+
+                                              <view class="lineThisNode"></view>
+                                              <view class="lineCircle"></view>
+                                              <text bindtap="turnToNode">{{lv5.NODE_NAME}}</text>
+                                            </view>
+                                          </view>
+                                        </block>
+                                      </view>
+                                    </view>
+                                  </view>
+                                </block>
+                              </view>
+                            </view>
+                          </view>
+                        </block>
+                      </view>
+                    </view>
+                  </view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <view class="pageView {{menuControl}}">
+      <span class="cUp">上一节</span>
+      <span class="cMenu" bindtap="turnToMenu">
+        <span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span>
+      </span>
+      <span class="cDown">下一节</span>
+    </view>
+  </view>
+</view>

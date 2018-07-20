@@ -1,0 +1,54 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.hoverTurn {
+  opacity: .9;
+}
+.bannerTop {
+  background: #fd7c54;
+  height: 295rpx;
+  width: 100%;
+  text-align: center;
+  padding-top: 24rpx;
+}
+.bannerTop image {
+  height: 247rpx;
+  width: 200rpx;
+  display: inline-block;
+}
+.scanCode {
+  text-align: center;
+}
+.scanCodeBtns {
+  height: 375rpx;
+  width: 318rpx;
+  display: inline-block;
+  margin: 160rpx 0 190rpx;
+}
+.readList {
+  padding: 0 24rpx;
+}
+.readList button {
+  background: #ff7043;
+  color: #fff;
+  font-size: 18px;
+  border-color: #ff7043;
+}

@@ -1,0 +1,5 @@
+<view>
+  <view class="loadImg">
+    <image src="../../static/image/loadVifi.gif" hover-class="hoverTurn" />
+  </view>
+</view>

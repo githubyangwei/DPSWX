@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "ui-sticky": "../../../packages/touchui-wx-components/ui-sticky/dist/index"
+  },
+  "navigationBarTitleText": "搜索结果"
+}

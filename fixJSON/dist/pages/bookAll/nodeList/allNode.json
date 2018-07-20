@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "ui-sticky": "../../../packages/touchui-wx-components/ui-sticky/dist/index"
+  },
+  "navigationBarTitleText": "谱书人物",
+  "navigationBarBackgroundColor": "#fff"
+}

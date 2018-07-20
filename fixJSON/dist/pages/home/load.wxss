@@ -1,0 +1,31 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.loadImg {
+  position: relative;
+  top: 300rpx;
+  text-align: center;
+}
+.loadImg image {
+  width: 180rpx;
+  height: 232rpx;
+  display: inline-block;
+}

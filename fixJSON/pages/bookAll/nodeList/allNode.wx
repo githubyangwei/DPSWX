@@ -1,0 +1,317 @@
+<template>
+  <view class="userConts">
+    <view class="sticky-in-relative-container">
+      <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap>
+
+        <view class="userTopCont">
+          <view class="topTables">
+            <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
+            <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
+          </view>
+          <view class="listSearch " bindtap="turnToSearch">
+            <icon type="search" size="18"></icon>
+            <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
+          </view>
+        </view>
+
+        <view class="userTopCont" slot="sticky">
+          <view class="topTables">
+            <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
+            <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
+          </view>
+          <view class="listSearch " bindtap="turnToSearch">
+            <icon type="search" size="18"></icon>
+            <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}">
+          </view>
+        </view>
+
+      </ui-sticky>
+    </view>
+
+    <view class="showNodeCont">
+      <view class="showNodes  {{showType == 0 ?'active':''}}">
+
+        <view class="nodeCont" bindtap="turnToUsers" wx:for="{{thisData}}" wx:for-index="Nindex" wx:key="item"  data-tid="{{item.NODE_ID}}">
+          <view class="ImgConts">
+            <image wx:if="{{item.NODE_PHOTO}}" src="{{item.NODE_PHOTO}}" hover-class="hoverTurn" />
+            <view class="nodeTxtImg" wx:else style="background:{{item.Color}}">{{item.NODE_SpsNode}}</view>
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>{{item.NODE_SURNAME+item.NODE_NAME}}</text>
+              <span color="#FFBE00" class="wxIcon wxIcon-{{item.NODE_SEX==0?'portrait men':'nv women'}}"></span>
+              <span class="lifeOr " wx:if="{{item.NODE_LIFE_FLAG=='1'}}">殁</span>
+              <view class="nodeParent" wx:if="{{item.NODE_FATHER_NAME}}">{{item.NODE_FATHER_NAME}}-{{item.NODE_MOTHER_NAME}}</view>
+            </view>
+            <view class="line2">
+              <text>{{item.BOOK_NAME}} / {{item.PROJECT_NAME}}</text>
+              <span class="wxIcon wxIcon-suo menLocked" wx:if="{{item.VISIT_OR=='0'}}"></span>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：{{item.NODE_NUMBER}}</text>
+              <text class="nodeSort">排行：{{item.NODE_FATHER_SORT==null?1:item.NODE_FATHER_SORT}}</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>{{item.CONNECT_SIZE}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+      <view class="showNodes  {{showType == 1 ?'active':''}}">
+
+        <view class="nodeCont" bindtap="turnToUsers" wx:for="{{allData}}" wx:for-index="Nindex" wx:key="item" data-tid="{{item.NODE_ID}}" >
+          <view class="ImgConts">
+            <image wx:if="{{item.NODE_PHOTO}}" src="{{item.NODE_PHOTO}}" hover-class="hoverTurn" />
+            <view class="nodeTxtImg" wx:else style="background:{{item.Color}}">{{item.NODE_SpsNode}}</view>
+          </view>
+          <view class="nodeDetail">
+            <view class="line1">
+              <text>{{item.NODE_SURNAME+item.NODE_NAME}}</text>
+              <span class="wxIcon wxIcon-{{item.NODE_SEX==0?'portrait men':'nv women'}}"></span>
+              <span class="lifeOr " wx:if="{{item.NODE_LIFE_FLAG=='1'}}">殁</span>
+              <view class="nodeParent" wx:if="{{item.NODE_FATHER_NAME}}">{{item.NODE_FATHER_NAME}}-{{item.NODE_MOTHER_NAME}}</view>
+            </view>
+            <view class="line2">
+              <text>{{item.BOOK_NAME}} / {{item.PROJECT_NAME}}</text>
+              <span class="wxIcon wxIcon-suo menLocked" wx:if="{{item.VISIT_OR=='0'}}"></span>
+            </view>
+            <view class="line3">
+              <text class="nodeDy">代数：{{item.NODE_NUMBER}}</text>
+              <text class="nodeSort">排行：{{item.NODE_FATHER_SORT==null?1:item.NODE_FATHER_SORT}}</text>
+              <view class="nodeLink">
+                <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+                <text>{{item.CONNECT_SIZE}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  var getData = ($obj, string) => {
+    return $obj.currentTarget.dataset[string];
+  }
+  export default {
+    config: {
+      navigationBarTitleText: '谱书人物',
+      navigationBarBackgroundColor: "#fff"
+    },
+    data: {
+      showType: 0,
+      NAV_HEIGHT: 0,
+      scrollTop: 0,
+      allData: [],
+      thisData: [],
+      index: 1,
+      index2: 1,
+      size: 6,
+      size2: 6,
+      ColorIndex: 0,
+      thiaAllNum: 0,
+      thiaAllNum2: 0,
+      bookId: "",
+      userId: wx.getLocalUserPhoto().userId
+    },
+    onPageScroll(e) {
+      this.setData({
+        scrollTop: e.scrollTop
+      })
+    },
+    //上拉加载
+    onReachBottom: function () {
+      var that = this;
+      if (that.data.showType == 0) {
+        if (that.data.thisData.length < that.data.thiaAllNum) {
+          that.setData({
+            index: that.data.index + 1,
+          });
+          that.loadThisBookConts();
+        }
+      } else {
+        if (that.data.thisData.length < that.data.thiaAllNum) {
+          that.setData({
+            index2: that.data.index2 + 1,
+          });
+          that.loadThisProCont();
+        }
+      }
+    },
+    topClick: function (e) {
+      this.setData({
+        showType: getData(e, "index"),
+      });
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 200
+      })
+    },
+    turnToSearch: function () {
+      var that = this;
+      wx.redirectTo({
+        url: 'nodeSearch?showType=' + that.data.showType + '&bookId=' + that.data.bookId
+      })
+    },
+    turnToUsers: function (e) {
+      wx.redirectTo({
+        url: 'nodeDetail?nodeId='+e.currentTarget.dataset.tid
+      })
+    },
+    onLoad: function (option) {
+      wx.showToast({
+        title: "加载中，请稍后...",
+        icon: "loading",
+        duration: 88000
+      })
+      var bookId = option.bookId;
+      this.setData({
+        bookId: bookId,
+        allData: []
+      })
+      this.loadThisBookConts();
+      this.loadThisProCont();
+    },
+    loadThisBookConts: function () {
+      var that = this;
+      wx.request({
+        url: wx.url + 'node/getNodePaging',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          index: that.data.index,
+          size: that.data.size,
+          bookId: that.data.bookId,
+          userId: that.data.userId,
+
+        },
+        success: function (noderes) {
+          var getData = noderes.data.pageData;
+          for (var i in getData) {
+            that.data.ColorIndex++;
+            var AllName = getData[i].NODE_SURNAME.replace(/\s|\xA0/g, "") + getData[i].NODE_NAME.replace(/\s|\xA0/g, "");
+            console.log(AllName, AllName.length)
+            getData[i].NODE_SpsNode = (AllName.length > 2) ? AllName.substring(AllName.length - 2) : AllName;
+            getData[i].Color = wx.colorArry[that.data.ColorIndex % 11];
+            that.data.thisData.push(getData[i]);
+          }
+          that.setData({
+            thiaAllNum: noderes.data.limitCount,
+            thisData: that.data.thisData
+          })
+          wx.hideToast()
+        }
+      })
+
+    },
+    loadThisProCont: function () {
+      var that = this;
+      wx.request({
+        url: wx.url + 'node/getNodePagingAll',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          index: that.data.index2,
+          size: that.data.size2,
+          bookId: that.data.bookId,
+          userId: that.data.userId,
+        },
+        success: function (noderes) {
+          var getData = noderes.data.pageData;
+          for (var i in getData) {
+            that.data.ColorIndex++;
+            var AllName = getData[i].NODE_SURNAME.replace(/\s|\xA0/g, "") + getData[i].NODE_NAME.replace(/\s|\xA0/g, "");
+            console.log(AllName, AllName.length)
+            getData[i].NODE_SpsNode = (AllName.length > 2) ? AllName.substring(AllName.length - 2) : AllName;
+            getData[i].Color = wx.colorArry[that.data.ColorIndex % 11];
+            that.data.allData.push(getData[i]);
+          }
+          that.setData({
+            thiaAllNum2: noderes.data.limitCount,
+            allData: that.data.allData
+          })
+          wx.hideToast()
+        }
+      })
+    }
+  }
+</script>
+
+
+<style lang="less">
+@import url("node.less");
+
+.userConts {
+  width: 100%;
+  min-height: 100%;
+  background: #f5f5f5;
+  .userTopCont {
+    height: 200rpx;
+    .topTables {
+      height: 86rpx;
+      text-align: center;
+      background: #fff;
+      .topTxt {
+        width: 210rpx;
+        height: 86rpx;
+        display: inline-block;
+        color: #808080;
+        font-size: 30rpx;
+        position: relative;
+      }
+      .topTxt.active {
+        color: #333333;
+        font-weight: bold;
+      }
+      .topTxt.active:after {
+        content: " ";
+        display: block;
+        width: 52rpx;
+        height: 8rpx;
+        background: #ff7043;
+        border-radius: 4rpx;
+        position: absolute;
+        bottom: 0;
+        left: 81rpx;
+      }
+    }
+
+    .listSearch {
+      height: 120rpx;
+      padding: 26rpx 32rpx;
+      position: relative;
+      z-index: 1;
+      background: #f5f5f5;
+      input {
+        background: #fafafa;
+        font-size: 30rpx;
+        padding-left: 74rpx;
+        height: 70rpx;
+        border-radius: 3rpx;
+      }
+      icon {
+        position: absolute;
+        top: 42rpx;
+        z-index: 15;
+        left: 46rpx;
+      }
+    }
+  }
+
+  .showNodeCont {
+    .showNodes {
+      display: none;
+    }
+    .showNodes.active {
+      display: block;
+    }
+  }
+}
+</style>

@@ -1,0 +1,453 @@
+<template>
+  <view class="bookDetailConts">
+    <view class="bookshow">
+      <view class="bookFont">
+        <image src="{{bookLogoImg}}" />
+      </view>
+      <view class="bookTextCont">
+        <view class="bookTitles">
+          <text>
+            <text wx:if="{{bookSurname}}">【{{bookSurname}}】</text>{{bookName}}</text>
+          <view class="bookQrCode" bindtap="openQrCode">
+            <span color="#FFBE00" class="wxIcon wxIcon-ai-code" style="color: #ff7b52;font-size: 32rpx;"></span>
+          </view>
+        </view>
+        <view class="bookHock">堂号：{{bookHallCode}}</view>
+        <view class="bookAuthur">编者：{{bookAuthor}}</view>
+        <view class="bookData">编篡：{{bookTime}}</view>
+      </view>
+    </view>
+
+    <view class="userline" wx:if="{{userConnMapSize>0}}">
+      <navigator url="../wxUser/bookLinkUser" class="navigator">
+        <view class="navigator-text">
+          <view class="userPhoto" wx:for="{{userConnMapData}}">
+            <image src="{{item.USER_PHOTO}}" />
+          </view>
+        </view>
+        <view class="navigator-arrow">
+          <text class="openMore">已连接用户({{userConnMapSize}})</text>
+        </view>
+      </navigator>
+    </view>
+
+    <view class="ui-row ui-row-border-top ui-row-border-bottom userAndBookAll">
+      <view class="ui-col ui-col-border-right ui-col-align-center align-center valign-middle">
+        <navigator url="bookList?totalName=总谱&totalKey={{bookId}}&totalType=1" class="ui-col-content align-center valign-middle">
+          <span color="#FFBE00" class="wxIcon wxIcon-shu" style="color: #ff7b52;font-size: 32rpx;"></span>
+          总谱
+          <text>（{{bookSize}}）</text>
+        </navigator>
+      </view>
+      <view class="ui-col ui-col-align-center align-center valign-middle">
+        <navigator url="../bookAll/nodeList/allNode?bookId={{bookId}}" class="ui-col-content align-center valign-middle">
+          <span color="#FFBE00" class="wxIcon wxIcon-Shapecopy" style="color: #ff7b52;font-size: 32rpx;"></span>
+          人物
+          <text>（{{nodeSize}}）</text>
+        </navigator>
+      </view>
+    </view>
+
+    <view class="showMenusCont">
+      <view class="menuTitle menuAline">
+        <span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span> 目录
+      </view>
+
+      <view wx:for="{{logMap}}" wx:key="key" class="MenuLv{{item.lv}} menuAline navigator" bindtap="menuTurn" data-visit="{{item.VISIT_OR}}" data-objid="{{item.OBJECT_ID}}"  data-objtype="{{item.OBJECT_TYPE}}" data-tid="{{item.CATALOG_ID}}">
+        <view class="navigator-text">
+           {{item.CATALOG_NAME}}
+        </view>
+      
+        <view class="navigator-arrow {{(item.OBJECT_ID=='0'||item.OBJECT_ID==''||item.OBJECT_ID==null)?'nores':''}}">
+           <span color="#FFBE00"  wx:if="{{item.VISIT_OR!=1}}" class="wxIcon wxIcon-suo menLocked" style="color: #808080;font-size: 40rpx"></span>
+        </view>
+      </view>
+
+
+
+
+
+
+    </view>
+
+    <ui-fixed-view bottom="0" left="0" right="0">
+      <view class="bookDetailBox">
+        <view class="ui-row" style="margin-bottom: 10rpx;">
+          <view class="ui-col bookBtns addCollect" hover-class="hoverTurn" bindtap="addCollect" style="padding-left: 10rpx;padding-right: 5rpx;">
+            <view class="ui-col-content">
+              <view class="column-content">加入收藏</view>
+            </view>
+          </view>
+          <view class="ui-col bookBtns readNow" hover-class="hoverTurn" bindtap="readNow" style="padding-left: 5rpx;padding-right: 10rpx;">
+            <view class="ui-col-content">
+              <view class="column-content">立即查阅</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </ui-fixed-view>
+
+    <user-tips></user-tips>
+
+  </view>
+</template>
+
+<script>
+  export default {
+    config: {
+      usingComponents: {
+        'user-tips': '../../packages/user-tips'
+      },
+      navigationBarTitleText: "",
+      navigationBarBackgroundColor: "#e5dcca"
+    },
+    data: {
+      userId: wx.getLocalUserPhoto().userId,
+      bookId: "",
+
+      bookAuthor: "",
+      bookHallCode: "",
+      bookId: "",
+      bookLogoImg: "",
+      bookSurname: "",
+      bookName: "",
+      bookTime: "",
+
+      bookSize: 0,
+      logMap: [],
+      nodeSize: 0,
+
+      userConnMapSize: 0,
+      userConnMapData: [],
+    },
+    //跳转向目录详情
+    menuTurn:function(){
+
+    },
+    onLoad: function (option) {
+      var that = this, bookId = option.bookId;
+
+      wx.showToast({
+        title: "加载中，请稍后...",
+        icon: "loading",
+        duration: 108000
+      });
+
+      this.setData({
+        bookId: bookId
+      })
+
+      wx.request({
+        url: wx.url + 'book/getBookIndex',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          userId: that.data.userId,
+          bookId: bookId,
+          acceptOr:''
+        },
+        success: function (bookres) {
+          bookres = bookres.data;
+
+          // 设置标题 
+          wx.setNavigationBarTitle({
+            title: bookres.bookMap.bookName,
+            success: function () {
+            },
+            fail: function (err) {
+            }
+          });
+
+          var ChangeJson = JSON.parse(JSON.stringify(bookres.logMap));
+          ChangeJson = wx.formatTree(ChangeJson, 'CATALOG_ID', 'CATALOG_PARENT_ID', 'child');
+          var fixedJSON = wx.prseTree(ChangeJson, 'child', 1);
+          for (var i in bookres.logMap) {
+            for (var j in fixedJSON) {
+              if(fixedJSON[j].CATALOG_ID==bookres.logMap[i].CATALOG_ID){
+                bookres.logMap[i].lv=fixedJSON[j].$lv
+              }
+            }
+          }
+          console.log(bookres.logMap)
+          that.setData({
+            bookAuthor: bookres.bookMap.bookAuthor,
+            bookHallCode: bookres.bookMap.bookHallCode,
+            bookLogoImg: bookres.bookMap.bookLogoImg == null ? '../../static/image/bookFM.png' : bookres.bookMap.bookLogoImg,
+            bookName: bookres.bookMap.bookName,
+            bookSurname: bookres.bookMap.bookSurname,
+            bookTime: bookres.bookMap.bookTime,
+
+            bookSize: bookres.bookSizeMap.bookSize,
+
+            logMap: bookres.logMap,
+            nodeSize: bookres.nodeSizeMap.nodeSize,
+
+            userConnMapSize: bookres.userConnMap.userSize,
+            userConnMapData: bookres.userConnMap.userData,
+          })
+
+          wx.hideToast();
+
+
+        }
+      })
+
+
+
+    },
+    openQrCode: function () {
+      wx.navigateTo({
+        url: "bookQrCode"
+      });
+    },
+    addCollect: function () {
+      wx.showToast({
+        title: "收藏成功",
+        icon: "success",
+        duration: 2000,
+        complete: function () {
+          wx.redirectTo({
+            url: "bookList?totalName=我的收藏&totalKey=userId&totalType=2"
+          });
+        }
+      });
+
+    },
+    readNow: function () {
+      wx.navigateTo({
+        url: "../bookAll/lineAndPage/page"
+      });
+    }
+  };
+</script>
+
+<style lang="less">
+@import url(../../static/styles/hover.less);
+.bookDetailConts {
+  background: #f5f5f5;
+  width: 100%;
+  min-height: 100%;
+}
+.bookshow {
+  height: 256rpx;
+  background: #e5dcca;
+  position: relative;
+  .bookFont {
+    position: absolute;
+    width: 161rpx;
+    height: 216rpx;
+    left: 38rpx;
+    top: 11rpx;
+  }
+  .bookTextCont {
+    padding-left: 224rpx;
+    padding-top: 11rpx;
+    color: #333333;
+    font-size: 26rpx;
+    line-height: 52rpx;
+    .bookTitles {
+      font-size: 30rpx;
+      line-height: 60rpx;
+      font-weight: bold;
+      position: relative;
+      .bookQrCode {
+        width: 32rpx;
+        height: 32rpx;
+        display: inline-block;
+        position: relative;
+        top: 2rpx;
+        left: 26rpx;
+        z-index: 12;
+      }
+    }
+  }
+}
+.userline {
+  height: 110rpx;
+  background: #fff;
+  position: relative;
+  margin-bottom: 24rpx;
+
+  .userPhoto {
+    width: 68rpx;
+    height: 68rpx;
+    border-radius: 35rpx;
+    overflow: hidden;
+    float: left;
+    margin-right: 16rpx;
+  }
+  .openMore {
+    position: relative;
+    right: 24rpx;
+    color: #666666;
+  }
+  .navigator {
+    padding: 20rpx 30rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .navigator:before {
+    content: " ";
+    position: absolute;
+    left: 30rpx;
+    top: 0;
+    right: 30rpx;
+    height: 1px;
+    border-top: 1rpx solid #d8d8d8;
+    color: #666666;
+  }
+  .navigator:first-child:before {
+    display: none;
+  }
+  .navigator-text {
+    flex: 1;
+  }
+  .navigator-arrow {
+    padding-right: 26rpx;
+    position: relative;
+  }
+  .navigator-arrow:after {
+    content: " ";
+    display: inline-block;
+    height: 18rpx;
+    width: 18rpx;
+    border-width: 2rpx 2rpx 0 0;
+    border-color: #888888;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: -8rpx;
+    right: 28rpx;
+  }
+}
+
+.userAndBookAll {
+  height: 102rpx;
+  background: #fff;
+  text-align: center;
+  overflow: hidden;
+  .ui-col-content {
+    height: 121rpx;
+    display: inline-block;
+    font-size: 34rpx;
+    .wxIcon {
+      height: 30rpx;
+      display: inline-block;
+      position: relative;
+      top: 2rpx;
+      padding-right: 15rpx;
+    }
+    text {
+      display: inline;
+      line-height: 130rpx;
+      font-size: 20rpx;
+      position: relative;
+      left: -10rpx;
+    }
+  }
+}
+.bookDetailBox {
+  height: 100rpx;
+  border-top: 1rpx solid #e5e5e5;
+  background: #fff;
+
+  .bookBtns {
+    text-align: center;
+    height: 72rpx;
+    margin: 7px 10px 0;
+    line-height: 72rpx;
+    font-size: 36rpx;
+    border-radius: 10rpx;
+  }
+  .addCollect {
+    color: #ff7b52;
+    background: #ffffff;
+    border: 1rpx solid #ff7b52;
+  }
+  .readNow {
+    color: #ffffff;
+    background: #ff7b52;
+  }
+}
+.showMenusCont {
+  background: #fff;
+  padding: 0 24rpx 101rpx;
+  .menuTitle {
+    font-size: 34rpx;
+    color: #333;
+    image {
+      width: 40rpx;
+      height: 30rpx;
+      display: inline-block;
+      margin-right: 2rpx;
+      position: relative;
+      top: 4rpx;
+    }
+  }
+  .menuAline {
+    border-bottom: 1rpx solid #d7c9c4;
+    height: 102rpx;
+    line-height: 102rpx;
+    position: relative;
+    .menLocked {
+      width: 27rpx;
+      height: 34rpx;
+      position:relative;
+      right:3rpx;
+    }
+  }
+
+  .menuAline:last-child {
+    border: none;
+    margin-bottom: 10rpx;
+  }
+  .MenuLv1 {
+    font-size: 32rpx;
+    color: #333;
+  }
+  .MenuLv2,
+  .MenuLv3 {
+    color: #4c4c4c;
+    font-size: 28rpx;
+  }
+  .MenuLv3 {
+    padding-left: 30rpx;
+  }
+
+  .navigator {
+    position: relative;
+    display: flex;
+    align-items: center;
+    vertical-align:middle;
+  }
+  .navigator-text {
+    flex: 1;
+    line-height:35rpx;
+
+  }
+  .navigator-arrow {
+    padding-right: 45rpx;
+    position: relative;
+  }
+  .navigator-arrow:after {
+    content: " ";
+    display: inline-block;
+    height: 18rpx;
+    width: 18rpx;
+    border-width: 2rpx 2rpx 0 0;
+    border-color: #888888;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: -8rpx;
+    right: 28rpx;
+  }
+}
+.nores.navigator-arrow:after{
+  display: none;
+}
+</style>

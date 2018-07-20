@@ -1,0 +1,291 @@
+<template>
+  <view>
+    <view class="loginImg">
+      <image src="../../static/image/loginLogo.png" hover-class="hoverTurn" />
+    </view>
+
+    <view class="loginCont loginPhone">
+      <span color="#FFBE00" class="wxIcon wxIcon-shouji"></span>
+      <input type="text" bindinput="bindPhoneKey" placeholder="请输入手机号" value="{{userPhone}}">
+      <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
+      <text>获取手机号</text>
+    </view>
+
+    <view class="loginCont loginCode">
+      <span color="#FFBE00" class="wxIcon wxIcon-yanzhengma2"></span>
+      <input type="text" bindinput="bindYzmKey" placeholder="请输入验证码" value="{{userVcode}}">
+      <button bindtap='getYzm' class="{{yzmClass}}" data-send="{{yzmSend}}">{{yzmStr}}</button>
+    </view>
+
+    <button open-type="getUserInfo" class="loginReg" bindgetuserinfo="bindGetUserInfo">登录</button>
+
+  </view>
+</template>
+
+<script>
+  var CodeLenth = 60;
+  //还未注册过的微信 显示登录相关 隐藏微信一键登录
+  // 已登录过的微信  只显示一键登录 
+  export default {
+    config: {
+      navigationBarTitleText: '登录'
+    },
+    data: {
+      turn: "",
+      userPhone: "",
+      userVcode: "",
+      yzmStr: '获取验证码',
+      yzmClass: '',
+      yzmSend: false,
+      sskey: '',
+      md5Key: '',
+      openid:''
+    },
+    onLoad: function (option) {
+      this.setData({
+        turn: option.turnUrl,
+        sskey: unescape(option.ssk),
+        openid:unescape(option.openid)
+      });
+      console.log(this.data.openid)
+    },
+    bindPhoneKey: function (e) {
+      this.setData({
+        userPhone: e.detail.value
+      })
+    },
+    bindYzmKey: function (e) {
+      this.setData({
+        userVcode: e.detail.value
+      })
+    },
+    getYzm: function (e) {
+      var that = this;
+      if (that.data.userPhone == "" || that.data.userPhone.length < 11) {
+        wx.showModal({
+          content: "请输入正确的手机号",
+          showCancel: false,
+          confirmText: "确定"
+        })
+        return false;
+      }
+      if (e.currentTarget.dataset.send) {//倒计时中
+        return false;
+      } else {
+        //验证用户手机号是否存在
+        wx.request({
+          url: wx.url+'appUser/existsUserPhone',
+          header: {
+            'content-type': 'application/json'
+          },
+          data: {
+            userPhone: that.data.userPhone
+          },
+          success: function (phoneRes) {
+            if (phoneRes.data.res) {
+
+            } else {
+              //发送验证码
+              wx.request({
+                url:  wx.url+'appUser/sendUserCode',
+                header: {
+                  'content-type': 'application/json'
+                },
+                data: {
+                  userPhone: that.data.userPhone
+                },
+                success: function (yzmres) {
+                  that.setData({
+                    md5Key: yzmres.data.res
+                  })
+                  var CodeIntel = setInterval(function () {
+                    if (CodeLenth > 0) {
+                      that.setData({
+                        yzmStr: CodeLenth,
+                        yzmClass: 'loadNums',
+                        yzmSend: true
+                      })
+                      CodeLenth--;
+                    } else {
+                      that.setData({
+                        yzmStr: '获取验证码',
+                        yzmClass: '',
+                        yzmSend: false
+                      })
+                      clearInterval(CodeIntel);
+                      CodeLenth = 60;
+                    }
+                  }, 1000)
+
+                }
+              })
+            }
+          }
+        })
+
+
+      }
+      console.log(e)
+    },
+    bindGetUserInfo: function (e) {
+      var that = this;
+      var getOpenId = this.data.openid;
+      var getUser = e.detail.userInfo;
+      
+      var sendInfo = {
+        userNickName: getUser.nickName,
+        userPhone: that.data.userPhone,
+        userPhoto: getUser.avatarUrl,
+        openId: getOpenId,
+        userSex: getUser.gender,
+        userCountry: getUser.country,
+        userProvince: getUser.province,
+        userCity: getUser.city,
+      }
+
+      wx.request({
+        url: wx.url+'appUser/verifyUserCode',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          userPhone: that.data.userPhone,
+          codePhone: that.data.userVcode,
+          md5Key: that.data.md5Key
+        },
+        success: function (VcoedBol) {
+          if (!VcoedBol.data) {
+            wx.showModal({
+              content: "验证码错误，请输入正确的验证码",
+              showCancel: false,
+              confirmText: "确定"
+            });
+          } else {
+            wx.request({
+              url: wx.url+'appUser/addAppUser',
+              header: {
+                'content-type': 'application/json'
+              },
+              data: sendInfo,
+              success: function (addUserRes) {
+                if (addUserRes.data) {
+                  try {
+                    wx.setStorageSync('userObj', JSON.stringify(addUserRes.data.res));
+                  } catch (e) {
+                  }
+
+                  wx.reLaunch({
+                    url: '/' + unescape(that.data.turn)
+                  })
+                } else {
+                  wx.showModal({
+                    content: "注册失败，请重新注册",
+                    showCancel: false,
+                    confirmText: "确定"
+                  });
+                }
+
+              }
+            })
+          }
+        }
+      })
+    },
+    getPhoneNumber: function (e) {
+      var that = this;
+      wx.request({
+        url: wx.url+'wechat/getWeChatPhone',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv,
+          sessionkey: that.data.sskey
+        },
+        success: function (pNumberRes) {
+          that.setData({
+            userPhone: pNumberRes.data.res.phoneNumber
+          })
+        }
+      })
+    }
+  }
+</script>
+
+<style lang="less">
+.loginImg {
+  margin: 45rpx 0 35rpx;
+  text-align: center;
+  image {
+    display: inline-block;
+    width: 172rpx;
+    height: 271rpx;
+  }
+}
+.loginCont {
+  height: 110rpx;
+  line-height: 110rpx;
+  margin: 0 25rpx;
+  font-size: 32rpx;
+  position: relative;
+  border-bottom: 1rpx solid #e6e6e6;
+  .wxIcon {
+    position: absolute;
+    top: 0;
+    left: 30rpx;
+    font-size: 40rpx;
+  }
+  input {
+    margin: 0 112rpx 0 100rpx;
+    height: 110rpx;
+    line-height: 110rpx;
+    width: 380rpx;
+  }
+  button {
+    position: absolute;
+    top: 18rpx;
+    right: 0;
+    height: 72rpx;
+    line-height: 72rpx;
+    font-size: 32rpx;
+    margin: 0;
+    z-index: 5;
+  }
+}
+.loginPhone {
+  button {
+    opacity: 0;
+  }
+  text {
+    color: #ff7043;
+    font-size: 32rpx;
+    position: absolute;
+    height: 72rpx;
+    line-height: 72rpx;
+    z-index: 2;
+    top: 18rpx;
+    right: 0;
+  }
+}
+.loginCode {
+  margin-bottom: 70rpx;
+  button {
+    background: #ff7043;
+    color: #fff;
+    width: 220rpx;
+    text-align: center;
+  }
+  button.loadNums {
+    background: #ccc;
+    color: #333;
+  }
+}
+.loginReg {
+  margin: 0 25rpx 25rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #ff7043;
+  color: #fff;
+}
+</style>

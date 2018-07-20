@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "已连接用户",
+  "navigationBarBackgroundColor": "#fafafa",
+  "enablePullDownRefresh": true
+}

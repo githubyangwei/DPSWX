@@ -1,0 +1,73 @@
+<view class="userConts">
+
+  <view class="userInfo">
+    <view class="userPhoto">
+      <image src="../../static/image/user.png" />
+    </view>
+    <view class="userNames">
+      <text style="font-size:30rpx;font-weight:bold;">王大崔</text>
+    </view>
+    <view class="userPhone">
+      <text style="font-size:28rpx;">13800138000</text>
+    </view>
+  </view>
+  <view class="userInfoTitle {{titleShowBol}}">{{titleStr}}</view>
+
+  <view class="showNodeCont">
+    <view class="showNodes ">
+
+      <view class="nodeCont">
+        <view class="ImgConts">
+          <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+        </view>
+        <view class="nodeDetail">
+          <view class="line1">
+            <text>果石</text>
+            <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+            <text class="nodeRelativeUser">兄弟</text>
+            <view class="nodeParent">陈*柏-成*香</view>
+          </view>
+          <view class="line2">
+            <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+          </view>
+          <view class="line3">
+            <text class="nodeDy">代数：45</text>
+            <text class="nodeSort">排行：2</text>
+            <view class="nodeLink">
+              <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+              <text>15</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="nodeCont">
+        <view class="ImgConts">
+          <image src="http://jointat-imgs.oss-cn-shenzhen.aliyuncs.com/mfb/node/img/17cc8772ac8942ac95d8ec45bf519221.jpg" hover-class="hoverTurn" />
+        </view>
+        <view class="nodeDetail">
+          <view class="line1">
+            <text>果石2</text>
+            <span color="#FFBE00" class="wxIcon wxIcon-portrait die"></span>
+            <text class="nodeRelativeUser">父亲</text>
+            <view class="nodeParent">陈*柏-成*香</view>
+          </view>
+          <view class="line2">
+            <text>果石庄六续会云宗谱·卷三 / 仕瀚公仕瀚公位下支系</text>
+          </view>
+          <view class="line3">
+            <text class="nodeDy">代数：45</text>
+            <text class="nodeSort">排行：2</text>
+            <view class="nodeLink">
+              <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+              <text>115</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+</view>

@@ -1,0 +1,75 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.UserConts {
+  background: #f5f5f5;
+  width: 100%;
+  min-height: 100%;
+  padding-top: 40rpx;
+}
+.UserConts .userInfo {
+  background: #fff;
+  height: 170rpx;
+  position: relative;
+  padding: 25rpx;
+}
+.UserConts .userInfo image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  overflow: hidden;
+  position: absolute;
+  top: 25rpx;
+  left: 25rpx;
+}
+.UserConts .userInfo .userInfoNp {
+  padding-left: 165rpx;
+  line-height: 60rpx;
+  color: #999999;
+  font-size: 28rpx;
+}
+.UserConts .userInfo .userInfoNp .nameAndSex text {
+  color: #232323;
+  font-size: 32rpx;
+}
+.UserConts .userInfo .userInfoNp .nameAndSex .wxIcon {
+  margin-left: 20rpx;
+  font-size: 36rpx;
+}
+.UserConts .userInfo .userInfoNp .nameAndSex .men {
+  color: #4c99a7;
+}
+.UserConts .userInfo .userInfoNp .nameAndSex .women {
+  color: #a74c4c;
+}
+.UserConts .userActs {
+  margin-top: 45rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding-left: 50rpx;
+  background: #fff;
+  color: #333333;
+  font-size: 32rpx;
+}
+.UserConts .userActs .wxIcon {
+  font-size: 34rpx;
+  margin-right: 36rpx;
+}

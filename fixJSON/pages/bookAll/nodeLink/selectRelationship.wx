@@ -1,0 +1,231 @@
+<template>
+  <view>
+    <view class="topDetail">
+      <view class="DetailConts">
+        <view class="userImgs">
+          <image src="../../../static/image/user.png" hover-class="hoverTurn" />
+          <span color="#FFBE00" class="wxIcon wxIcon-icfemale men"></span>
+          <!-- 男 wxIcon-icfemale men  女  wxIcon-icmale women-->
+        </view>
+        <view class="detailName">
+          张大仙
+          <span class="lifeOr ">殁</span>
+          <!-- die  死亡-->
+        </view>
+        <view class="moerInfo">
+          <view class="infoDs">
+            <span color="#FFBE00" class="wxIcon wxIcon-fmgx" style="font-size:30rpx;"></span>
+            <text>陈杰伦-成小双 之子（入继）</text>
+          </view>
+          <view class="infoDs">
+            <span color="#FFBE00" class="wxIcon wxIcon-shu"></span>
+            <text>果石庄六续会云宗谱·卷三 / 仕瀚史册公位下支系仕瀚史册公位下支系</text>
+          </view>
+          <view class="infoDs">
+            <span color="#FFBE00" class="wxIcon wxIcon-lianjie"></span>
+            <text>2018-06-10 李迪迪</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="Relainput">
+      <text>TA是我的</text>
+      <input type="text" focus="true" adjust-position="true" bindinput="bindKey" maxlength=4 placeholder="输入关系标签（必填），限4字" value="{{relativeStr}}">
+    </view>
+
+    <view class="commonsTips">
+      <view class="TipsTitle">
+        常用标签
+      </view>
+      <view class="TipsConts">
+        <view wx:for="{{RlvArry}}" hoverClass="TipsListCks" class="TipsList" data-str="{{item}}" bindtap="selatRlv">{{item}}</view>
+      </view>
+    </view>
+
+    <ui-fixed-view class='bottonLines {{authorStr}}' bottom="0" left="0" right="0">
+      <navigator open-type="redirect" url="linkNode" class="lineBtns">
+        <text>下一步</text>
+      </navigator>
+    </ui-fixed-view>
+  </view>
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '关系选择',
+      navigationBarBackgroundColor: "#ff7b52",
+      navigationBarTextStyle: "#fff"
+    },
+    data: {
+      relativeStr: '',
+      RlvArry: ['自己', '妻子', '丈夫', '父亲', '母亲', '儿子', '女儿', '哥哥', '姐姐', '爷爷', '奶奶', '叔父', '叔母', '伯父', '伯母', '姑夫', '姑母', '舅舅', '舅妈', '姨父', '姨母', '孙子', '孙女', '外孙', '外孙女']
+    },
+    bindKey: function (e) {
+      this.setData({
+        relativeStr: e.detail.value
+      })
+    },
+    selatRlv: function (e) {
+      this.setData({
+        relativeStr: e.currentTarget.dataset.str
+      })
+    }
+  }
+</script>
+
+<style lang="less">
+page {
+  background: #f7f7f7;
+}
+.topDetail {
+  height: 316rpx;
+  background: #ff7b52;
+  position: relative;
+  margin-bottom: 78rpx;
+  .DetailConts {
+    position: absolute;
+    top: 38rpx;
+    width: 670rpx;
+    height: 357rpx;
+    background: #fff;
+    left: 40rpx;
+    padding-top: 96rpx;
+    .userImgs {
+      width: 102rpx;
+      height: 102rpx;
+      position: absolute;
+      left: 274rpx;
+      top: -28rpx;
+      .wxIcon {
+        font-size: 40rpx;
+        position: absolute;
+        bottom: -20rpx;
+        right: -20rpx;
+        background: #fff;
+        border-radius: 20rpx;
+        width: 40rpx;
+        line-height: 40rpx;
+        height: 40rpx;
+      }
+      .wxIcon.men {
+        color: #4c99a7;
+      }
+      .wxIcon.women {
+        color: #a74c4c;
+      }
+      .wxIcon.die {
+        color: #999;
+      }
+    }
+    .detailName {
+      text-align: center;
+      font-size: 30rpx;
+      color: #000;
+      font-weight: bold;
+      .lifeOr {
+        display: none;
+        width: 30rpx;
+        height: 30rpx;
+        background: #000;
+        font-weight: normal;
+        color: #fff;
+        font-size: 20rpx;
+        position: relative;
+        top: -3rpx;
+      }
+      .lifeOr.die {
+        display: inline-block;
+      }
+    }
+    .moerInfo {
+      margin-top: 20rpx;
+      .infoDs {
+        height: 60rpx;
+        line-height: 60rpx;
+        margin: 0 30rpx;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #333333;
+        font-size: 24rpx;
+        span {
+          color: #ff6200;
+          font-size: 24rpx;
+          margin-right: 15rpx;
+        }
+      }
+    }
+    .dxTurn {
+      height: 40rpx;
+      line-height: 40rpx;
+      font-size: 24rpx;
+      color: #fff;
+      background: #ff7b52;
+      border-radius: 4rpx;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: 0 10rpx;
+      display: none;
+    }
+    .dxTurn.active {
+      display: block;
+    }
+  }
+}
+.Relainput {
+  margin-top: 120rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #fff;
+  padding-left: 50rpx;
+  text {
+    color: #333333;
+    font-size: 32rpx;
+  }
+  input {
+    font-size: 26rpx;
+    width: 520rpx;
+    float: right;
+    height: 100rpx;
+    line-height: 100rpx;
+  }
+}
+.TipsTitle {
+  height: 74rpx;
+  line-height: 74rpx;
+  color: #333333;
+  padding-left: 50rpx;
+}
+.TipsConts {
+  padding: 0 40rpx 180rpx;
+}
+.TipsList {
+  width: 138rpx;
+  margin: 15rpx;
+  height: 45rpx;
+  line-height: 43rpx;
+  text-align: center;
+  display: inline-block;
+  border-radius: 30rpx;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  color: #333333;
+  font-size: 22rpx;
+}
+.TipsListCks{
+  border-color: #ff6200
+}
+.lineBtns {
+  width: 700rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #ff7043;
+  color: #fff;
+  border-radius: 15rpx;
+  margin: 45rpx auto 10rpx;
+  text-align: center;
+}
+</style>

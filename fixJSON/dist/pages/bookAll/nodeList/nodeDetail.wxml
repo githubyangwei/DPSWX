@@ -1,0 +1,146 @@
+<view class="nodeViewConts">
+  <view class="topDetail">
+    <view class="DetailConts">
+      <view class="userImgs">
+        <image src="../../../static/image/user.png" hover-class="hoverTurn" />
+        <span color="#FFBE00" class="wxIcon wxIcon-icfemale men"></span>
+        <!-- 男 wxIcon-icfemale men  女  wxIcon-icmale women-->
+      </view>
+      <view class="detailName">
+        张大仙
+        <span class="lifeOr ">殁</span>
+        <!-- die  死亡-->
+      </view>
+      <view class="moerInfo">
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-fmgx" style="font-size:30rpx;"></span>
+          <text>陈杰伦-成小双 之子（入继）</text>
+        </view>
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-shu"></span>
+          <text>果石庄六续会云宗谱·卷三 / 仕瀚史册公位下支系仕瀚史册公位下支系</text>
+        </view>
+        <view class="infoDs">
+          <span color="#FFBE00" class="wxIcon wxIcon-lianjie"></span>
+          <text>2018-06-10 李迪迪</text>
+        </view>
+      </view>
+      <view class="dxTurn {{authorStr}}" bindtap="turnDx">吊线图</view>
+    </view>
+  </view>
+  <view class="userMoreInfo">
+    <view class="userMoreInfoInner {{authorStr}}">
+      <view class="relationPic">
+        <view style="height:600rpx;">
+          <ec-canvas id="mychart-dom-pie" style="height:600rpx;width:750rpx;" canvas-id="mychart-pie" ec="{{ ec }}" _pid="{{_pid}}"></ec-canvas>
+        </view>
+
+      </view>
+
+      <view class="nodeText">
+        <view>
+          <span>李小迪</span>
+          <span>长子</span>
+          字洪福行疏四
+        </view>
+        <view>生于清道光十九年己亥七月甘一日末</view>
+        <view>殁于民国七年戊午九月十三日未时 </view>
+        <view>葬耀科下首大园岡扦作寅山申向</view>
+      </view>
+
+      <view class="nodeSingleBlocks">
+        <div>妻子</div>
+        <span>朱氏</span>
+        合葬罗山朱堂乡 建有墓志 合葬罗山朱堂乡 建有墓志 合葬罗山朱堂乡 建有墓志 合葬罗山朱堂乡 建有墓志
+      </view>
+
+      <view class="nodeSingleBlocks" style="padding:25rpx 30rpx;">
+        <div>生三子一女</div>
+        <span>朱言</span>
+        <span>朱琴</span>
+        <span>朱度</span>
+        <span>朱发</span>
+        <span>朱非</span>
+      </view>
+
+      <view class="connectDetail">
+        <view class="connectTitle">
+          连接他的
+        </view>
+        <view class="userline">
+          <navigator url="../../wxUser/userLink?linkType=1&linkId=123" class="navigator">
+            <view class="navigator-text">
+              <view class="userPhoto">
+                <image src="../../../static/image/user.png" />
+              </view>
+              <view class="userInfo">
+                <view class="userLine1">
+                  <text>大蛇丸</text>
+                  <span color="#FFBE00" class="wxIcon wxIcon-portrait men"></span>
+
+                </view>
+                <view class="userLine2">
+                  <span color="#FFBE00" class="wxIcon wxIcon-guanlian " style="color: #808080;font-size:26rpx"></span>
+                  <text>12</text>
+                </view>
+
+              </view>
+
+              <view class="linkNode">
+                <span color="#FFBE00" class="wxIcon wxIcon-lianjie " style="color: #808080;font-size:26rpx"></span>
+                2018-01-12
+                <!-- 最后连接的用户 -->
+              </view>
+
+            </view>
+            <view class="navigator-arrow">
+            </view>
+          </navigator>
+        </view>
+
+        <view class="userline">
+          <navigator url="../../wxUser/userLink?linkType=2&linkId=123" class="navigator">
+            <view class="navigator-text">
+              <view class="userPhoto">
+                <image src="../../../static/image/user.png" />
+              </view>
+              <view class="userInfo">
+                <view class="userLine1">
+                  <text>大蛇丸</text>
+                  <span color="#FFBE00" class="wxIcon wxIcon-portrait women"></span>
+
+                </view>
+                <view class="userLine2">
+                  <span color="#FFBE00" class="wxIcon wxIcon-guanlian " style="color: #808080;font-size:26rpx"></span>
+                  <text>12</text>
+                </view>
+
+              </view>
+
+              <view class="linkNode">
+                <span color="#FFBE00" class="wxIcon wxIcon-lianjie " style="color: #808080;font-size:26rpx"></span>
+                2018-01-12
+                <!-- 最后连接的用户 -->
+              </view>
+
+            </view>
+            <view class="navigator-arrow">
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <view class="overFixed {{authorStr}}">
+      <view class="lineTips"> 想看到更多详细信息</view>
+      <navigator url="../nodeLink/selectRelationship" class="lineBtns">
+        <text>立即连接</text>
+      </navigator>
+    </view>
+  </view>
+
+  <ui-fixed-view class="bottonLines {{authorStr}}" bottom="0" left="0" right="0" _pid="{{_pid}}">
+    <navigator url="../nodeLink/selectRelationship" class="lineBtns">
+      <text>立即连接</text>
+    </navigator>
+  </ui-fixed-view>
+</view>

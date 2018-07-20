@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "ui-fixed-view": "../../../packages/touchui-wx-components/ui-fixed-view/dist/index",
+    "ec-canvas": "../../../packages/ec-canvas/index"
+  },
+  "navigationBarTitleText": "人物详情",
+  "navigationBarBackgroundColor": "#ff7b52",
+  "navigationBarTextStyle": "#fff"
+}

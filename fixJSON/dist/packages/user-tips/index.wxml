@@ -1,0 +1,3 @@
+<view class="user-tips" bindtap="handleTap">
+  <image src="{{imgUrl}}" hover-class="hoverTurn" />
+</view>

@@ -1,0 +1,65 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.QrCodeCont {
+  background: #ff7b52;
+  width: 100%;
+  height: 100%;
+  padding-top: 10rpx;
+}
+.QrCodeCont .QrCodeBks {
+  margin: 0 25rpx;
+  height: 985rpx;
+  background: #fff;
+  border-radius: 6rpx;
+}
+.QrCodeCont .QrCodeBks .QrTitle {
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #ff7b52;
+  font-size: 24rpx;
+  padding-left: 50rpx;
+}
+.QrCodeCont .QrCodeBks .QrTitle image {
+  height: 30rpx;
+  display: inline-block;
+  position: relative;
+  top: 6rpx;
+  padding-right: 15rpx;
+}
+.QrCodeCont .QrCodeBks .QrImages {
+  width: 355rpx;
+  height: 355rpx;
+  margin: 175rpx auto 0;
+  background: #ccc;
+}
+.QrCodeCont .QrCodeBks .QrStr {
+  font-size: 28rpx;
+  color: #333333;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+}
+.QrCodeCont .QrCodeBks .QrDownLoad {
+  color: #ff7b52;
+  font-size: 24rpx;
+  text-align: center;
+}

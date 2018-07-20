@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "ui-fixed-view": "../../../packages/touchui-wx-components/ui-fixed-view/dist/index"
+  },
+  "navigationBarTitleText": "关系选择",
+  "navigationBarBackgroundColor": "#ff7b52",
+  "navigationBarTextStyle": "#fff"
+}

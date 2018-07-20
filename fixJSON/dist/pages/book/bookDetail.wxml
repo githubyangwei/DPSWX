@@ -1,0 +1,91 @@
+<view class="bookDetailConts">
+  <view class="bookshow">
+    <view class="bookFont">
+      <image src="{{bookLogoImg}}" />
+    </view>
+    <view class="bookTextCont">
+      <view class="bookTitles">
+        <text>
+          <text wx:if="{{bookSurname}}">【{{bookSurname}}】</text>{{bookName}}</text>
+        <view class="bookQrCode" bindtap="openQrCode">
+          <span color="#FFBE00" class="wxIcon wxIcon-ai-code" style="color: #ff7b52;font-size: 32rpx;"></span>
+        </view>
+      </view>
+      <view class="bookHock">堂号：{{bookHallCode}}</view>
+      <view class="bookAuthur">编者：{{bookAuthor}}</view>
+      <view class="bookData">编篡：{{bookTime}}</view>
+    </view>
+  </view>
+
+  <view class="userline" wx:if="{{userConnMapSize>0}}">
+    <navigator url="../wxUser/bookLinkUser" class="navigator">
+      <view class="navigator-text">
+        <view class="userPhoto" wx:for="{{userConnMapData}}">
+          <image src="{{item.USER_PHOTO}}" />
+        </view>
+      </view>
+      <view class="navigator-arrow">
+        <text class="openMore">已连接用户({{userConnMapSize}})</text>
+      </view>
+    </navigator>
+  </view>
+
+  <view class="ui-row ui-row-border-top ui-row-border-bottom userAndBookAll">
+    <view class="ui-col ui-col-border-right ui-col-align-center align-center valign-middle">
+      <navigator url="bookList?totalName=总谱&totalKey={{bookId}}&totalType=1" class="ui-col-content align-center valign-middle">
+        <span color="#FFBE00" class="wxIcon wxIcon-shu" style="color: #ff7b52;font-size: 32rpx;"></span>
+        总谱
+        <text>（{{bookSize}}）</text>
+      </navigator>
+    </view>
+    <view class="ui-col ui-col-align-center align-center valign-middle">
+      <navigator url="../bookAll/nodeList/allNode?bookId={{bookId}}" class="ui-col-content align-center valign-middle">
+        <span color="#FFBE00" class="wxIcon wxIcon-Shapecopy" style="color: #ff7b52;font-size: 32rpx;"></span>
+        人物
+        <text>（{{nodeSize}}）</text>
+      </navigator>
+    </view>
+  </view>
+
+  <view class="showMenusCont">
+    <view class="menuTitle menuAline">
+      <span color="#FFBE00" class="wxIcon wxIcon-shejimulu" style="color: #808080;font-size: 32rpx;margin-right:8rpx;"></span> 目录
+    </view>
+
+    <view wx:for="{{logMap}}" wx:key="key" class="MenuLv{{item.lv}} menuAline navigator" bindtap="menuTurn" data-visit="{{item.VISIT_OR}}" data-objid="{{item.OBJECT_ID}}" data-objtype="{{item.OBJECT_TYPE}}" data-tid="{{item.CATALOG_ID}}">
+      <view class="navigator-text">
+        {{item.CATALOG_NAME}}
+      </view>
+
+      <view class="navigator-arrow {{(item.OBJECT_ID=='0'||item.OBJECT_ID==''||item.OBJECT_ID==null)?'nores':''}}">
+        <span color="#FFBE00" wx:if="{{item.VISIT_OR!=1}}" class="wxIcon wxIcon-suo menLocked" style="color: #808080;font-size: 40rpx"></span>
+      </view>
+    </view>
+
+
+
+
+
+
+  </view>
+
+  <ui-fixed-view bottom="0" left="0" right="0" _pid="{{_pid}}">
+    <view class="bookDetailBox">
+      <view class="ui-row" style="margin-bottom: 10rpx;">
+        <view class="ui-col bookBtns addCollect" hover-class="hoverTurn" bindtap="addCollect" style="padding-left: 10rpx;padding-right: 5rpx;">
+          <view class="ui-col-content">
+            <view class="column-content">加入收藏</view>
+          </view>
+        </view>
+        <view class="ui-col bookBtns readNow" hover-class="hoverTurn" bindtap="readNow" style="padding-left: 5rpx;padding-right: 10rpx;">
+          <view class="ui-col-content">
+            <view class="column-content">立即查阅</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </ui-fixed-view>
+
+  <user-tips _pid="{{_pid}}"></user-tips>
+
+</view>

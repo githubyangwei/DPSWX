@@ -1,0 +1,68 @@
+<template>
+  <page></page>
+</template>
+
+<script>
+  import system from './static/utils/system'
+  export default {
+    config: {
+      usingComponents: {},
+      pages: [
+
+
+        'pages/home/index',
+        'pages/book/bookList',
+        'pages/book/bookQrCode',
+        'pages/book/bookDetail',
+        'pages/home/login',
+        'pages/home/load',
+        'pages/bookAll/nodeList/allNode',
+        'pages/bookAll/nodeList/nodeSearch',
+        'pages/bookAll/nodeList/searchResult',
+        'pages/bookAll/nodeList/nodeDetail',
+
+        'pages/bookAll/nodeLink/linkNode',
+        
+        'pages/bookAll/nodeLink/selectRelationship',
+        'pages/bookAll/lineAndPage/bookMenu',
+        'pages/bookAll/lineAndPage/page',
+        'pages/bookAll/lineAndPage/line',
+        'pages/wxUser/userHome',
+        'pages/wxUser/userLink',
+        'pages/wxUser/bookLinkUser',
+      ],
+      window: {
+        backgroundTextStyle: 'dark',
+        backgroundColor: '#efefef',
+        navigationBarBackgroundColor: '#ffffff',
+        navigationBarTitleText: '大谱师',
+        navigationBarTextStyle: 'black'
+      },
+      networkTimeout: {
+        request: 10000
+      },
+      theme: {
+        'theme-color': '#39f'
+      }
+    },
+    globalData: {},
+    onLaunch() {
+      system.attachInfo()
+    },
+    onShow() { },
+    onHide() { }
+  }
+</script>
+
+<style lang="less">
+@import "./static/styles/index.less";
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+</style>

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "user-tips": "../../packages/user-tips/index"
+  },
+  "navigationBarTitleText": "家谱名字",
+  "navigationBarBackgroundColor": "#ff7b52",
+  "navigationBarTextStyle": "#fff"
+}

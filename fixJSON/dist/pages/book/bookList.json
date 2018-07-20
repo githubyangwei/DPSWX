@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "ui-sticky": "../../packages/touchui-wx-components/ui-sticky/dist/index",
+    "user-tips": "../../packages/user-tips/index"
+  },
+  "navigationBarTitleText": "家谱",
+  "enablePullDownRefresh": true
+}

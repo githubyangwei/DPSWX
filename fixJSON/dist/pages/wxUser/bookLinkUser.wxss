@@ -1,0 +1,118 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.showMoreLink {
+  background: #f0f0f0;
+  min-height: 100%;
+  width: 100%;
+}
+.userline {
+  height: 124rpx;
+  background: #fff;
+  position: relative;
+  margin-bottom: 1px;
+}
+.userline .userPhoto {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 35rpx;
+  overflow: hidden;
+  float: left;
+  margin-right: 16rpx;
+}
+.userline .userInfo {
+  position: absolute;
+  left: 140rpx;
+  height: 125rpx;
+  top: 15rpx;
+}
+.userline .userInfo .userLine1,
+.userline .userInfo .userLine2 {
+  height: 48rpx;
+  line-height: 48rpx;
+}
+.userline .userInfo .userLine1 {
+  color: #232323;
+  font-size: 32rpx;
+}
+.userline .userInfo .userLine1 .wxIcon {
+  margin-left: 20rpx;
+}
+.userline .userInfo .userLine1 .men {
+  color: #4c99a7;
+}
+.userline .userInfo .userLine1 .women {
+  color: #a74c4c;
+}
+.userline .userInfo .userLine2 {
+  color: #4c4c4c;
+}
+.userline .userInfo .userLine2 .wxIcon {
+  margin-right: 10rpx;
+}
+.userline .linkNode {
+  height: 65rpx;
+  line-height: 64rpx;
+  float: right;
+  padding-right: 45rpx;
+  font-size: 24rpx;
+  color: #4c4c4c;
+}
+.userline .navigator {
+  padding: 30rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.userline .navigator:before {
+  content: " ";
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  right: 30rpx;
+  height: 1px;
+  border-top: 1rpx solid #d8d8d8;
+  color: #666666;
+}
+.userline .navigator:first-child:before {
+  display: none;
+}
+.userline .navigator-text {
+  flex: 1;
+}
+.userline .navigator-arrow {
+  padding-right: 26rpx;
+  position: relative;
+}
+.userline .navigator-arrow:after {
+  content: " ";
+  display: inline-block;
+  height: 18rpx;
+  width: 18rpx;
+  border-width: 2rpx 2rpx 0 0;
+  border-color: #888888;
+  border-style: solid;
+  transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  position: absolute;
+  top: 50%;
+  margin-top: -8rpx;
+  right: 28rpx;
+}

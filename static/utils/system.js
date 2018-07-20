@@ -1,7 +1,6 @@
 export default {
   attachInfo() {
     let res = wx.getSystemInfoSync()
-
     wx.WIN_WIDTH = res.screenWidth
     wx.WIN_HEIGHT = res.screenHeight
     wx.IS_IOS = /ios/i.test(res.system)

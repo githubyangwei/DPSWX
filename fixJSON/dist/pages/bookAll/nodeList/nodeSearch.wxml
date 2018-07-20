@@ -1,0 +1,29 @@
+<view>
+  <view class="tipSearchs">
+    <view class="listSearch">
+      <view class="inputConts">
+        <input type="search" bindconfirm="searchACT" bindinput="searchTxtIn" confirm-type="search" placeholder="搜索姓名" value="{{searchStr}}"></input>
+
+      </view>
+      <view bindtap="searchACT" class="searchACT">搜索</view>
+    </view>
+  </view>
+  <view class="searchHistory">
+    <view class="hisTitle">历史搜索</view>
+    <view class="historyTips">
+      <text bindtap="selectHistory" wx:for="{{searchHitory}}" wx:key="item" data-text="{{item}}">{{item}}</text>
+
+    </view>
+
+  </view>
+  <view class="searchTips">
+
+    <view class="tipsIcon">
+      <span color="#FFBE00" class="wxIcon wxIcon-dengpao women"></span>
+    </view>
+    <view class="tipsStr">先要搜索到你要连接的人物</view>
+    <view class="tipsStr">再进行连接验证操作哦</view>
+
+  </view>
+
+</view>

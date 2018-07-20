@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.wxa": "vue",
+			"*.wx": "vue",
+			"*.wxc": "vue",
+			"*.cjson": "jsonc",
+			"*.wxss": "css",
+			"*.wxs": "javascript"
+		},
+		"touchuiwx.enable": true,
+		"vetur.extensions": [
+			".vue",
+			".wx",
+			".wxc",
+			".wxa"
+		]
+	}
+}

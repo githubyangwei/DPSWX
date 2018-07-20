@@ -1,0 +1,300 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.nodeViewConts {
+  background: #f7f7f7;
+  width: 100%;
+  min-height: 100%;
+}
+.nodeViewConts .topDetail {
+  height: 316rpx;
+  background: #ff7b52;
+  position: relative;
+  margin-bottom: 78rpx;
+}
+.nodeViewConts .topDetail .DetailConts {
+  position: absolute;
+  top: 38rpx;
+  width: 670rpx;
+  height: 357rpx;
+  background: #fff;
+  left: 40rpx;
+  padding-top: 96rpx;
+}
+.nodeViewConts .topDetail .DetailConts .userImgs {
+  width: 102rpx;
+  height: 102rpx;
+  position: absolute;
+  left: 274rpx;
+  top: -28rpx;
+}
+.nodeViewConts .topDetail .DetailConts .userImgs .wxIcon {
+  font-size: 40rpx;
+  position: absolute;
+  bottom: -20rpx;
+  right: -20rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  width: 40rpx;
+  line-height: 40rpx;
+  height: 40rpx;
+}
+.nodeViewConts .topDetail .DetailConts .userImgs .wxIcon.men {
+  color: #4c99a7;
+}
+.nodeViewConts .topDetail .DetailConts .userImgs .wxIcon.women {
+  color: #a74c4c;
+}
+.nodeViewConts .topDetail .DetailConts .userImgs .wxIcon.die {
+  color: #999;
+}
+.nodeViewConts .topDetail .DetailConts .detailName {
+  text-align: center;
+  font-size: 30rpx;
+  color: #000;
+  font-weight: bold;
+}
+.nodeViewConts .topDetail .DetailConts .detailName .lifeOr {
+  display: none;
+  width: 30rpx;
+  height: 30rpx;
+  background: #000;
+  font-weight: normal;
+  color: #fff;
+  font-size: 20rpx;
+  position: relative;
+  top: -3rpx;
+}
+.nodeViewConts .topDetail .DetailConts .detailName .lifeOr.die {
+  display: inline-block;
+}
+.nodeViewConts .topDetail .DetailConts .moerInfo {
+  margin-top: 20rpx;
+}
+.nodeViewConts .topDetail .DetailConts .moerInfo .infoDs {
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: 0 30rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333333;
+  font-size: 24rpx;
+}
+.nodeViewConts .topDetail .DetailConts .moerInfo .infoDs span {
+  color: #ff6200;
+  font-size: 24rpx;
+  margin-right: 15rpx;
+}
+.nodeViewConts .topDetail .DetailConts .dxTurn {
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #fff;
+  background: #ff7b52;
+  border-radius: 4rpx;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 10rpx;
+  display: none;
+}
+.nodeViewConts .topDetail .DetailConts .dxTurn.active {
+  display: block;
+}
+.nodeViewConts .userMoreInfo {
+  padding-top: 10rpx;
+  position: relative;
+}
+.nodeViewConts .userMoreInfo .userMoreInfoInner {
+  filter: blur(5px);
+}
+.nodeViewConts .userMoreInfo .userMoreInfoInner.active {
+  filter: none;
+  padding-bottom: 110rpx;
+}
+.nodeViewConts .userMoreInfo .nodeText {
+  margin: 24rpx;
+  padding: 15rpx 30rpx;
+  background: #fff;
+  box-shadow: #666 0 0px 20px -5px;
+}
+.nodeViewConts .userMoreInfo .nodeText view {
+  height: 44rpx;
+  line-height: 44rpx;
+  font-size: 24rpx;
+  color: #333333;
+}
+.nodeViewConts .userMoreInfo span {
+  color: #ff6200;
+  margin-right: 15rpx;
+}
+.nodeViewConts .userMoreInfo .nodeSingleBlocks {
+  padding: 15rpx 30rpx;
+  margin: 24rpx;
+  line-height: 44rpx;
+  color: #333;
+  background: #fff;
+  box-shadow: #666 0 0px 20px -5px;
+}
+.nodeViewConts .userMoreInfo .nodeSingleBlocks div {
+  display: inline-block;
+  padding: 0 20rpx;
+  margin-right: 15rpx;
+  background: #ff6200;
+  color: #fff;
+  border-radius: 5rpx;
+}
+.nodeViewConts .userMoreInfo .connectTitle {
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-left: 24rpx;
+  font-size: 28rpx;
+  color: #808080;
+}
+.nodeViewConts .userMoreInfo .active.overFixed {
+  display: none;
+}
+.nodeViewConts .userMoreInfo .overFixed {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-top: 220rpx;
+  text-align: center;
+  top: 0;
+  left: 0;
+}
+.nodeViewConts .userMoreInfo .overFixed .lineTips {
+  color: #f03900;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.lineBtns {
+  width: 480rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #ff7043;
+  color: #fff;
+  border-radius: 8rpx;
+  margin: 45rpx auto 10rpx;
+  text-align: center;
+}
+.bottonLines {
+  display: none;
+}
+.bottonLines .lineBtns {
+  width: 90%;
+}
+.bottonLines.active {
+  display: block;
+}
+.userline {
+  height: 124rpx;
+  background: #fff;
+  position: relative;
+  margin-bottom: 1px;
+}
+.userline .userPhoto {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 35rpx;
+  overflow: hidden;
+  float: left;
+  margin-right: 16rpx;
+}
+.userline .userInfo {
+  position: absolute;
+  left: 140rpx;
+  height: 125rpx;
+  top: 15rpx;
+}
+.userline .userInfo .userLine1,
+.userline .userInfo .userLine2 {
+  height: 48rpx;
+  line-height: 48rpx;
+}
+.userline .userInfo .userLine1 {
+  color: #232323;
+  font-size: 32rpx;
+}
+.userline .userInfo .userLine1 .wxIcon {
+  margin-left: 20rpx;
+}
+.userline .userInfo .userLine1 .men {
+  color: #4c99a7;
+}
+.userline .userInfo .userLine1 .women {
+  color: #a74c4c;
+}
+.userline .userInfo .userLine2 {
+  color: #4c4c4c;
+}
+.userline .userInfo .userLine2 .wxIcon {
+  margin-right: 10rpx;
+}
+.userline .linkNode {
+  height: 65rpx;
+  line-height: 64rpx;
+  float: right;
+  padding-right: 45rpx;
+  font-size: 24rpx;
+  color: #4c4c4c;
+}
+.userline .navigator {
+  padding: 30rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.userline .navigator:before {
+  content: " ";
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  right: 30rpx;
+  height: 1px;
+  border-top: 1rpx solid #d8d8d8;
+  color: #666666;
+}
+.userline .navigator:first-child:before {
+  display: none;
+}
+.userline .navigator-text {
+  flex: 1;
+}
+.userline .navigator-arrow {
+  padding-right: 26rpx;
+  position: relative;
+}
+.userline .navigator-arrow:after {
+  content: " ";
+  display: inline-block;
+  height: 18rpx;
+  width: 18rpx;
+  border-width: 2rpx 2rpx 0 0;
+  border-color: #888888;
+  border-style: solid;
+  transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  position: absolute;
+  top: 50%;
+  margin-top: -8rpx;
+  right: 28rpx;
+}

@@ -1,0 +1,93 @@
+<view class="userConts">
+  <view class="sticky-in-relative-container">
+    <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}" stick-on-tap="" _pid="{{_pid}}">
+
+      <view class="userTopCont">
+        <view class="topTables">
+          <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
+          <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
+        </view>
+        <view class="listSearch " bindtap="turnToSearch">
+          <icon type="search" size="18"></icon>
+          <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}"></input>
+        </view>
+      </view>
+
+      <view class="userTopCont" slot="sticky">
+        <view class="topTables">
+          <view class="topTxt {{showType == 0 ?'active':''}}" bindtap="topClick" data-index="0">本册</view>
+          <view class="topTxt {{showType == 1 ?'active':''}}" bindtap="topClick" data-index="1">全部</view>
+        </view>
+        <view class="listSearch " bindtap="turnToSearch">
+          <icon type="search" size="18"></icon>
+          <input type="search" disabled="disabled" placeholder="搜索姓名" value="{{searchStr}}"></input>
+        </view>
+      </view>
+
+    </ui-sticky>
+  </view>
+
+  <view class="showNodeCont">
+    <view class="showNodes  {{showType == 0 ?'active':''}}">
+
+      <view class="nodeCont" bindtap="turnToUsers" wx:for="{{thisData}}" wx:for-index="Nindex" wx:key="item" data-tid="{{item.NODE_ID}}">
+        <view class="ImgConts">
+          <image wx:if="{{item.NODE_PHOTO}}" src="{{item.NODE_PHOTO}}" hover-class="hoverTurn" />
+          <view class="nodeTxtImg" wx:else="" style="background:{{item.Color}}">{{item.NODE_SpsNode}}</view>
+        </view>
+        <view class="nodeDetail">
+          <view class="line1">
+            <text>{{item.NODE_SURNAME+item.NODE_NAME}}</text>
+            <span color="#FFBE00" class="wxIcon wxIcon-{{item.NODE_SEX==0?'portrait men':'nv women'}}"></span>
+            <span class="lifeOr " wx:if="{{item.NODE_LIFE_FLAG=='1'}}">殁</span>
+            <view class="nodeParent" wx:if="{{item.NODE_FATHER_NAME}}">{{item.NODE_FATHER_NAME}}-{{item.NODE_MOTHER_NAME}}</view>
+          </view>
+          <view class="line2">
+            <text>{{item.BOOK_NAME}} / {{item.PROJECT_NAME}}</text>
+            <span class="wxIcon wxIcon-suo menLocked" wx:if="{{item.VISIT_OR=='0'}}"></span>
+          </view>
+          <view class="line3">
+            <text class="nodeDy">代数：{{item.NODE_NUMBER}}</text>
+            <text class="nodeSort">排行：{{item.NODE_FATHER_SORT==null?1:item.NODE_FATHER_SORT}}</text>
+            <view class="nodeLink">
+              <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+              <text>{{item.CONNECT_SIZE}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <view class="showNodes  {{showType == 1 ?'active':''}}">
+
+      <view class="nodeCont" bindtap="turnToUsers" wx:for="{{allData}}" wx:for-index="Nindex" wx:key="item" data-tid="{{item.NODE_ID}}">
+        <view class="ImgConts">
+          <image wx:if="{{item.NODE_PHOTO}}" src="{{item.NODE_PHOTO}}" hover-class="hoverTurn" />
+          <view class="nodeTxtImg" wx:else="" style="background:{{item.Color}}">{{item.NODE_SpsNode}}</view>
+        </view>
+        <view class="nodeDetail">
+          <view class="line1">
+            <text>{{item.NODE_SURNAME+item.NODE_NAME}}</text>
+            <span class="wxIcon wxIcon-{{item.NODE_SEX==0?'portrait men':'nv women'}}"></span>
+            <span class="lifeOr " wx:if="{{item.NODE_LIFE_FLAG=='1'}}">殁</span>
+            <view class="nodeParent" wx:if="{{item.NODE_FATHER_NAME}}">{{item.NODE_FATHER_NAME}}-{{item.NODE_MOTHER_NAME}}</view>
+          </view>
+          <view class="line2">
+            <text>{{item.BOOK_NAME}} / {{item.PROJECT_NAME}}</text>
+            <span class="wxIcon wxIcon-suo menLocked" wx:if="{{item.VISIT_OR=='0'}}"></span>
+          </view>
+          <view class="line3">
+            <text class="nodeDy">代数：{{item.NODE_NUMBER}}</text>
+            <text class="nodeSort">排行：{{item.NODE_FATHER_SORT==null?1:item.NODE_FATHER_SORT}}</text>
+            <view class="nodeLink">
+              <span color="#FFBE00" class="wxIcon wxIcon-guanlian"></span>
+              <text>{{item.CONNECT_SIZE}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+</view>

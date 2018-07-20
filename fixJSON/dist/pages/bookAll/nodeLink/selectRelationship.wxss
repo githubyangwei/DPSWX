@@ -1,0 +1,173 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+page {
+  background: #f7f7f7;
+}
+.topDetail {
+  height: 316rpx;
+  background: #ff7b52;
+  position: relative;
+  margin-bottom: 78rpx;
+}
+.topDetail .DetailConts {
+  position: absolute;
+  top: 38rpx;
+  width: 670rpx;
+  height: 357rpx;
+  background: #fff;
+  left: 40rpx;
+  padding-top: 96rpx;
+}
+.topDetail .DetailConts .userImgs {
+  width: 102rpx;
+  height: 102rpx;
+  position: absolute;
+  left: 274rpx;
+  top: -28rpx;
+}
+.topDetail .DetailConts .userImgs .wxIcon {
+  font-size: 40rpx;
+  position: absolute;
+  bottom: -20rpx;
+  right: -20rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  width: 40rpx;
+  line-height: 40rpx;
+  height: 40rpx;
+}
+.topDetail .DetailConts .userImgs .wxIcon.men {
+  color: #4c99a7;
+}
+.topDetail .DetailConts .userImgs .wxIcon.women {
+  color: #a74c4c;
+}
+.topDetail .DetailConts .userImgs .wxIcon.die {
+  color: #999;
+}
+.topDetail .DetailConts .detailName {
+  text-align: center;
+  font-size: 30rpx;
+  color: #000;
+  font-weight: bold;
+}
+.topDetail .DetailConts .detailName .lifeOr {
+  display: none;
+  width: 30rpx;
+  height: 30rpx;
+  background: #000;
+  font-weight: normal;
+  color: #fff;
+  font-size: 20rpx;
+  position: relative;
+  top: -3rpx;
+}
+.topDetail .DetailConts .detailName .lifeOr.die {
+  display: inline-block;
+}
+.topDetail .DetailConts .moerInfo {
+  margin-top: 20rpx;
+}
+.topDetail .DetailConts .moerInfo .infoDs {
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: 0 30rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333333;
+  font-size: 24rpx;
+}
+.topDetail .DetailConts .moerInfo .infoDs span {
+  color: #ff6200;
+  font-size: 24rpx;
+  margin-right: 15rpx;
+}
+.topDetail .DetailConts .dxTurn {
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #fff;
+  background: #ff7b52;
+  border-radius: 4rpx;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 10rpx;
+  display: none;
+}
+.topDetail .DetailConts .dxTurn.active {
+  display: block;
+}
+.Relainput {
+  margin-top: 120rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #fff;
+  padding-left: 50rpx;
+}
+.Relainput text {
+  color: #333333;
+  font-size: 32rpx;
+}
+.Relainput input {
+  font-size: 26rpx;
+  width: 520rpx;
+  float: right;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.TipsTitle {
+  height: 74rpx;
+  line-height: 74rpx;
+  color: #333333;
+  padding-left: 50rpx;
+}
+.TipsConts {
+  padding: 0 40rpx 180rpx;
+}
+.TipsList {
+  width: 138rpx;
+  margin: 15rpx;
+  height: 45rpx;
+  line-height: 43rpx;
+  text-align: center;
+  display: inline-block;
+  border-radius: 30rpx;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  color: #333333;
+  font-size: 22rpx;
+}
+.TipsListCks {
+  border-color: #ff6200;
+}
+.lineBtns {
+  width: 700rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #ff7043;
+  color: #fff;
+  border-radius: 15rpx;
+  margin: 45rpx auto 10rpx;
+  text-align: center;
+}
